@@ -1,0 +1,4 @@
+.idea
+uoj_data/
+.php-cs-fixer.cache
+.config.local.php
