@@ -1,6 +1,6 @@
 # Online Judge of PPSUC
 
-<p align="center"><img src="/Users/andrewlee/Desktop/Projects/UOJ4PPSUC/CyberSwat.png"></p>
+<p align="center"><img src="./CyberSwat.png"></p>
 
 The source code of Online Judge system of PPSUC, focusing on the training of programming skills.
 
