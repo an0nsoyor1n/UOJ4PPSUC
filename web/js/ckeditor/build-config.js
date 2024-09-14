@@ -40,7 +40,7 @@ var CKBUILDER_CONFIG = {
 		'dev',
 		'node_modules',
 		'package.json',
-		'README.md',
+		'UOJ_README.md',
 		'tests'
 	],
 	plugins : {
