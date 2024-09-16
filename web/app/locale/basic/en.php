@@ -16,6 +16,7 @@ return [
 	'announcements' => 'Announcements',
 	'all the announcements' => 'All the Announcements……',
 	'help' => 'Help',
+	'tools'=> 'Tools',
 	'search' => 'Search',
 	'top rated' => 'Top rated',
 	'username' => 'Username',
@@ -65,5 +66,15 @@ return [
 	'male' => 'Male',
 	'female' => 'Female',
 	'server time' => 'Server Time',
-	'opensource project' => 'OpenSource Project'
+	'opensource project' => 'OpenSource Project',
+	'frequently asked questions' => 'Frequently Asked Questions (FAQ) in Chinese',
+	'language' => 'Language',
+	'upload using editor' => 'Upload using editor',
+	'upload from local file' => 'Upload from local file',
+	'use advanced editor' => 'Use advanced editor',
+	'code sharing' => 'Code Sharing',
+	'graph visualization' => 'Graph Visualization',
+	'blog Overview' => 'Blog Overview',
+	'my blog home page' => 'My Blog Home Page',
+	'write a new blog' => 'Write a New Blog'
 ];

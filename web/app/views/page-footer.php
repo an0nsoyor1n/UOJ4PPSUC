@@ -10,9 +10,15 @@
 					<button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle" data-toggle="dropdown">
 						<span class="glyphicon glyphicon-globe"></span> <?= UOJLocale::get('_common_name') ?>
 					</button>
+					<!--更改语言选项-->
 					<div class="dropdown-menu">
 						<a class="dropdown-item" href="<?= HTML::url(UOJContext::requestURI(), array('params' => array('locale' => 'zh-cn'))) ?>">中文</a>
 						<a class="dropdown-item" href="<?= HTML::url(UOJContext::requestURI(), array('params' => array('locale' => 'en'))) ?>">English</a>
+						<a class="dropdown-item" href="<?= HTML::url(UOJContext::requestURI(), array('params' => array('locale' => 'rus'))) ?>">Русский язык</a>
+						<a class="dropdown-item" href="<?= HTML::url(UOJContext::requestURI(), array('params' => array('locale' => 'ger'))) ?>">Deutsch</a>
+						<a class="dropdown-item" href="<?= HTML::url(UOJContext::requestURI(), array('params' => array('locale' => 'fra'))) ?>">Français</a>
+						<a class="dropdown-item" href="<?= HTML::url(UOJContext::requestURI(), array('params' => array('locale' => 'spa'))) ?>">Español</a>
+						<a class="dropdown-item" href="<?= HTML::url(UOJContext::requestURI(), array('params' => array('locale' => 'por'))) ?>">Português</a>
 					</div>
 				</div>
 				

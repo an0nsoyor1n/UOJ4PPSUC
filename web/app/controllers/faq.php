@@ -5,7 +5,7 @@
 ?>
 <article>
 	<header>
-		<h2 class="page-header">常见问题及其解答(FAQ)</h2>
+		<h2 class="page-header"><?= UOJLocale::get('frequently asked questions') ?></h2>
 	</header>
 	<section>
 		<div class="card my-1">

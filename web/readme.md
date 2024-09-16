@@ -12,3 +12,16 @@ The web folder contains the source code for the front end of the PPSUCOJ system.
 - css: A directory for CSS files such as blog-editor.css, bootstrap-dialog.min.css, and uoj-theme.css.
 - js: A directory for JavaScript files, including LAB.min.js, base64.min.js, and uoj.js.
 - app: Contains the core application files such as cli.php, route.php, and directories like controllers, models, and views.
+
+## modify of the language
+
+1. add a button in file ``web/app/models/UOJLocale.php``(fill the LANGUAGE_FILE_NAME and LANGUAGE_NAME with your language file name and language name)
+
+```PHP
+<div class="dropdown-menu">
+	<a class="dropdown-item" href="<?= HTML::url(UOJContext::requestURI(), array('params' => array('locale' => 'LANGUAGE_FILE_NAME'))) ?>">LANGUAGE_NAME</a>
+</div>
+```
+
+2. add your language translation file in ``web/app/locale/basic``, ``web/app/locale/contests`` and ``web/app/locale/problems``, the file name should be ``LANGUAGE_FILE_NAME.php``
+3. modify configure in ``web/app/models/UOJLocale.php``, add ``LANGUAGE_NAME`` in the array of ``$supported_locales``

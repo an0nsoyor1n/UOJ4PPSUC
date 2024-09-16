@@ -16,6 +16,7 @@ return [
 	'announcements' => '公告',
 	'all the announcements' => '所有公告……',
 	'help' => '帮助',
+	'tools'=> '工具',
 	'search' => '搜索',
 	'top rated' => '比赛排行榜',
 	'username' => '用户名',
@@ -65,5 +66,15 @@ return [
 	'male' => '男',
 	'female' => '女',
 	'server time' => '服务器时间',
-	'opensource project' => '开源项目'
+	'opensource project' => '开源项目',
+    'frequently asked questions' => '常见问题',
+    'language' => '语言',
+	'upload using editor' => '使用编辑器上传',
+	'upload from local file' => '从本地文件上传',
+	'use advanced editor' => '使用高级编辑器',
+	'code sharing' => '代码分享',
+	'graph visualization' => '图可视化',
+	'blog Overview' => '博客总览',
+	'my blog home page' => '我的博客首页',
+	'write a new blog' => '写新博客'
 ];

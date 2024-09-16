@@ -14,11 +14,12 @@
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="toolsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<span class="glyphicon glyphicon-wrench"></span>
-					工具
+
+					<?= UOJLocale::get('tools') ?>
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="<?= HTML::url('/paste') ?>"><span class="glyphicon glyphicon-paste"></span> 代码分享 </a>
-					<a class="dropdown-item" href="<?= HTML::url('/map_visualizer') ?>"><span class="glyphicon glyphicon-retweet"></span> 图可视化 </a>
+					<a class="dropdown-item" href="<?= HTML::url('/paste') ?>"><span class="glyphicon glyphicon-paste"></span> <?= UOJLocale::get('code sharing') ?> </a>
+					<a class="dropdown-item" href="<?= HTML::url('/map_visualizer') ?>"><span class="glyphicon glyphicon-retweet"></span> <?= UOJLocale::get('graph visualization') ?> </a>
 				</div>
 			</li>
 		</ul>

@@ -1,7 +1,7 @@
 <?php
 
 class UOJLocale {
-	public static $supported_locales = array('zh-cn', 'en');
+	public static $supported_locales = array('zh-cn', 'en', 'rus', 'ger', 'fra', 'spa', 'por');
 	public static $supported_modules = array('basic', 'contests', 'problems');
 	public static $data = array();
 	public static $required = array();

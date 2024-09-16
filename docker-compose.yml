@@ -81,8 +81,8 @@ services:
         # 数据卷，将宿主机的目录挂载到容器的目录上
         volumes:
             - ./uoj_data/web/data:/var/uoj_data
-            - ./uoj_data/web/storage:/opt/uoj/web/app/storage
-            - ./web/images:/opt/uoj/web/images
+            # - ./uoj_data/web/storage:/opt/uoj/web/app/storage
+            - ./web:/opt/uoj/web
             # 绑定挂载，用于配置文件
             -   type: bind
                 source: ./.config.local.php
