@@ -7,7 +7,7 @@ class UOJLocale {
 	// 支持的本地化语言列表
 	public static $supported_locales = array('en', 'zh-cn', 'rus', 'ger', 'fra', 'spa', 'por');
 	// 支持的本地化模块列表
-	public static $supported_modules = array('basic', 'contests', 'problems', 'faq');
+	public static $supported_modules = array('basic', 'contests', 'problems', 'faq', 'mainpage');
 	// 本地化数据存储数组
 	public static $data = array();
 	// 已加载的模块列表
