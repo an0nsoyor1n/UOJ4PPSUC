@@ -1,4 +1,4 @@
-<div class="navbar navbar-light navbar-expand-md bg-light mb-4" role="navigation">
+<div class="navbar navbar-light navbar-expand-md bg-light mb-4 shadow-lg rounded" role="navigation">
 	<a class="navbar-brand" href="<?= HTML::url('/') ?>"><?= UOJConfig::$data['profile']['oj-name-short'] ?></a>
 	<button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target=".navbar-collapse">
 		<span class="navbar-toggler-icon"></span>
@@ -25,7 +25,7 @@
 		</ul>
 		<form id="form-search-problem" class="form-inline my-2 my-lg-0" method="get">
 			 <div class="input-group">
-				<input type="text" class="form-control" name="search" id="input-search" placeholder="<?= UOJLocale::get('search')?>" />  
+				<input type="text" class="form-control" name="search" id="input-search" placeholder="<?= UOJLocale::get('search')?>" />
 				<div class="input-group-append">
 					<button type="submit" class="btn btn-search btn-outline-primary" id="submit-search"><span class="glyphicon glyphicon-search"></span></button>
 				</div>

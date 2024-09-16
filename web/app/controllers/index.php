@@ -2,7 +2,7 @@
 	$blogs = DB::selectAll("select blogs.id, title, poster, post_time from important_blogs, blogs where is_hidden = 0 and important_blogs.blog_id = blogs.id order by level desc, important_blogs.blog_id desc limit 5");
 ?>
 <?php echoUOJPageHeader(UOJConfig::$data['profile']['oj-name-short']) ?>
-<div class="card card-default">
+<div class="card card-default shadow rounded" style='padding: 20px;'>
 	<div class="card-body">
 		<div class="row">
 			<div class="col-sm-12 col-md-9">
@@ -46,9 +46,11 @@
 <div class="row">
 	<div class="col-sm-12 mt-4">
 		<h3><?= UOJLocale::get('top rated') ?></h3>
-		<?php echoRanklist(array('echo_full' => '', 'top10' => '')) ?>
-		<div class="text-center">
-			<a href="/ranklist"><?= UOJLocale::get('view all') ?></a>
+		<div class='shadow rounded' style='padding: 20px;'>
+			<?php echoRanklist(array('echo_full' => '', 'top10' => '')) ?>
+			<div class="text-center">
+				<a href="/ranklist"><?= UOJLocale::get('view all') ?></a>
+			</div>
 		</div>
 	</div>
 </div>

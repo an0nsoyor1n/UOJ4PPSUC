@@ -67,7 +67,7 @@ return [
     'female' => 'Feminino',
     'server time' => 'Hora do servidor',
     'opensource project' => 'Projeto de código aberto',
-    'frequently asked questions' => 'Perguntas Frequentes (FAQ) em Chinês',
+    'frequently asked questions' => 'Perguntas Frequentes (FAQ)',
     'language' => 'Idioma',
 	'upload using editor' => 'Enviar usando o editor',
 	'upload from local file' => 'Enviar a partir de arquivo local',

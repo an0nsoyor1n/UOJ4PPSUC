@@ -31,7 +31,7 @@
 	}
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('submissions')) ?>
-<div class="d-none d-sm-block">
+<div class='d-none d-sm-block shadow rounded' style='padding: 20px;'>
 	<?php if ($myUser != null): ?>
 	<div class="float-right">
 		<a href="/submissions?submitter=<?= $myUser['username'] ?>" class="btn btn-primary btn-sm"><?= UOJLocale::get('problems::my submissions') ?></a>
@@ -76,8 +76,10 @@
 		});
 	</script>
 	<div class="top-buffer-sm"></div>
-</div>
-<?php
+
+	<?php
 	echoSubmissionsList($cond, 'order by id desc', array('judge_time_hidden' => ''), $myUser);
-?>
+	?>
+</div>
+
 <?php echoUOJPageFooter() ?>

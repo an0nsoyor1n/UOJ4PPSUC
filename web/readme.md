@@ -25,3 +25,12 @@ The web folder contains the source code for the front end of the PPSUCOJ system.
 
 2. add your language translation file in ``web/app/locale/basic``, ``web/app/locale/contests`` and ``web/app/locale/problems``, the file name should be ``LANGUAGE_FILE_NAME.php``
 3. modify configure in ``web/app/models/UOJLocale.php``, add ``LANGUAGE_NAME`` in the array of ``$supported_locales``
+
+## Location of the source code of the Main Page
+
+- Announcements and rated: web/app/controllers/index.php
+- Main navigation bar: web/app/views/main-nav.php
+- Hack list: web/app/controllers/hack_list.php
+- Submission list: web/app/controllers/submissions_list.php
+- Blog page and blog list: web/app/controllers/blogs.php
+- faq: web/app/controllers/faq.php

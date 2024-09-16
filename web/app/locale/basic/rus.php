@@ -67,7 +67,7 @@ return [
 	'female' => 'Женский',
 	'server time' => 'Время сервера',
 	'opensource project' => 'Открытый проект',
-    'frequently asked questions' => 'Часто задаваемые вопросы (FAQ) на китайском языке',
+    'frequently asked questions' => 'Часто задаваемые вопросы (FAQ)',
 	'language' => 'Язык',
 	'upload using editor' => 'Загрузить с помощью редактора',
 	'upload from local file' => 'Загрузить из локального файла',
