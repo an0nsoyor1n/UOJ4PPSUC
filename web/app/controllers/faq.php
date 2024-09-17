@@ -7,7 +7,7 @@
 	<header>
 		<h2 class="page-header"><?= UOJLocale::get('frequently asked questions') ?></h2>
 	</header>
-	<section class='shadow rounded' style='padding: 20px;'>
+	<section class='shadow-lg rounded' style='padding: 20px;'>
 		<div class="card my-1">
 			<div class="card-header collapsed" id="headerOne" data-toggle="collapse" data-target="#collapseOne" style="cursor:pointer;">
 				<h5 class="mb-0"><?= UOJLocale::get('faq::q1') ?></h5>

@@ -134,61 +134,65 @@ EOD;
 	$table_classes = array('table', 'table-bordered', 'table-hover', 'table-striped');
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('problems')) ?>
-<div class="row">
-	<div class="col-sm-4">
-		<?= HTML::tablist($tabs_info, $cur_tab, 'nav-pills') ?>
+<div class='shadow-lg rounded' style='padding: 20px;'>
+	<div class="row">
+		<div class="col-sm-4">
+			<?= HTML::tablist($tabs_info, $cur_tab, 'nav-pills') ?>
+		</div>
+		<div class="col-sm-4 order-sm-9 checkbox text-right">
+			<label class="checkbox-inline" for="input-show_tags_mode"><input type="checkbox" id="input-show_tags_mode" <?= isset($_COOKIE['show_tags_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show tags') ?></label>
+			<label class="checkbox-inline" for="input-show_submit_mode"><input type="checkbox" id="input-show_submit_mode" <?= isset($_COOKIE['show_submit_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show statistics') ?></label>
+		</div>
+		<div class="col-sm-4 order-sm-5">
+		<?php echo $pag->pagination(); ?>
+		</div>
 	</div>
-	<div class="col-sm-4 order-sm-9 checkbox text-right">
-		<label class="checkbox-inline" for="input-show_tags_mode"><input type="checkbox" id="input-show_tags_mode" <?= isset($_COOKIE['show_tags_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show tags') ?></label>
-		<label class="checkbox-inline" for="input-show_submit_mode"><input type="checkbox" id="input-show_submit_mode" <?= isset($_COOKIE['show_submit_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show statistics') ?></label>
-	</div>
-	<div class="col-sm-4 order-sm-5">
-	<?php echo $pag->pagination(); ?>
-	</div>
+
+	<div class="top-buffer-sm"></div>
+
+	<script type="text/javascript">
+	$('#input-show_tags_mode').click(function() {
+		if (this.checked) {
+			$.cookie('show_tags_mode', '', {path: '/problems'});
+		} else {
+			$.removeCookie('show_tags_mode', {path: '/problems'});
+		}
+		location.reload();
+	});
+	$('#input-show_submit_mode').click(function() {
+		if (this.checked) {
+			$.cookie('show_submit_mode', '', {path: '/problems'});
+		} else {
+			$.removeCookie('show_submit_mode', {path: '/problems'});
+		}
+		location.reload();
+	});
+	</script>
+	<?php
+		echo '<div class="', join($div_classes, ' '), '">';
+		echo '<table class="', join($table_classes, ' '), '">';
+		echo '<thead>';
+		echo $header;
+		echo '</thead>';
+		echo '<tbody>';
+
+		foreach ($pag->get() as $idx => $row) {
+			echoProblem($row);
+			echo "\n";
+		}
+		if ($pag->isEmpty()) {
+			echo '<tr><td class="text-center" colspan="233">'.UOJLocale::get('none').'</td></tr>';
+		}
+
+		echo '</tbody>';
+		echo '</table>';
+		echo '</div>';
+
+		if (isSuperUser($myUser)) {
+			$new_problem_form->printHTML();
+		}
+
+		echo $pag->pagination();
+	?>
 </div>
-<div class="top-buffer-sm"></div>
-<script type="text/javascript">
-$('#input-show_tags_mode').click(function() {
-	if (this.checked) {
-		$.cookie('show_tags_mode', '', {path: '/problems'});
-	} else {
-		$.removeCookie('show_tags_mode', {path: '/problems'});
-	}
-	location.reload();
-});
-$('#input-show_submit_mode').click(function() {
-	if (this.checked) {
-		$.cookie('show_submit_mode', '', {path: '/problems'});
-	} else {
-		$.removeCookie('show_submit_mode', {path: '/problems'});
-	}
-	location.reload();
-});
-</script>
-<?php
-	echo '<div class="', join($div_classes, ' '), '">';
-	echo '<table class="', join($table_classes, ' '), '">';
-	echo '<thead>';
-	echo $header;
-	echo '</thead>';
-	echo '<tbody>';
-	
-	foreach ($pag->get() as $idx => $row) {
-		echoProblem($row);
-		echo "\n";
-	}
-	if ($pag->isEmpty()) {
-		echo '<tr><td class="text-center" colspan="233">'.UOJLocale::get('none').'</td></tr>';
-	}
-	
-	echo '</tbody>';
-	echo '</table>';
-	echo '</div>';
-	
-	if (isSuperUser($myUser)) {
-		$new_problem_form->printHTML();
-	}
-	
-	echo $pag->pagination();
-?>
 <?php echoUOJPageFooter() ?>

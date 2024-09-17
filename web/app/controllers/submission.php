@@ -129,8 +129,13 @@
 	$REQUIRE_LIB['hljs'] = "";
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('problems::submission').' #'.$submission['id']) ?>
-<?php echoSubmissionsListOnlyOne($submission, array(), $myUser) ?>
 
+<!--Submission list-->
+<div class='shadow-lg rounded' style='padding: 20px;margin-bottom:15px;'>
+	<?php echoSubmissionsListOnlyOne($submission, array(), $myUser) ?>
+</div>
+
+<!--Answer-->
 <?php if ($should_show_content): ?>
 	<?php echoSubmissionContent($submission, getProblemSubmissionRequirement($problem)) ?>
 	<?php if ($hackable): ?>
@@ -150,9 +155,10 @@
 	<?php endif ?>
 <?php endif ?>
 
+<!--detail bar-->
 <?php if ($should_show_all_details): ?>
-	<div class="card border-info mb-3">
-		<div class="card-header bg-info">
+	<div class="card border border-black mb-3 shadow-lg" style="border-radius: 25px;">
+		<div class="card-header">
 			<h4 class="card-title"><?= UOJLocale::get('details') ?></h4>
 		</div>
 		<div class="card-body">

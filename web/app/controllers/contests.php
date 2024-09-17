@@ -46,53 +46,57 @@ EOD;
 	}
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('contests')) ?>
-<h4><?= UOJLocale::get('contests::current or upcoming contests') ?></h4>
-<?php
-	$table_header = '';
-	$table_header .= '<tr>';
-	$table_header .= '<th>'.UOJLocale::get('contests::contest name').'</th>';
-	$table_header .= '<th style="width:15em;">'.UOJLocale::get('contests::start time').'</th>';
-	$table_header .= '<th style="width:100px;">'.UOJLocale::get('contests::duration').'</th>';
-	$table_header .= '<th style="width:100px;">'.UOJLocale::get('contests::the number of registrants').'</th>';
-	$table_header .= '<th style="width:180px;">'.UOJLocale::get('appraisal').'</th>';
-	$table_header .= '</tr>';
-	echoLongTable(array('*'), 'contests', "status != 'finished'", 'order by start_time asc, id asc', $table_header,
-		echoContest,
-		array('page_len' => 100)
-	);
 
-	if ($rest_second <= 86400) {
-		$notification = json_encode($upcoming_contest_name . " 已经开始了。是否要跳转到比赛页面？");
-		echo <<<EOD
-<div class="text-center bot-buffer-lg">
-<div class="text-warning">$upcoming_contest_name 倒计时</div>
-<div id="contest-countdown"></div>
-<script type="text/javascript">
-$('#contest-countdown').countdown($rest_second, function() {
-	if (confirm($notification)) {
-		window.location.href = "$upcoming_contest_href";
-	}
-});
-</script>
-</div>
-EOD;
-	}
-?>
+<div class='shadow-lg rounded' style='padding: 20px;'>
+	<h4><?= UOJLocale::get('contests::current or upcoming contests') ?></h4>
+	<?php
+		$table_header = '';
+		$table_header .= '<tr>';
+		$table_header .= '<th>'.UOJLocale::get('contests::contest name').'</th>';
+		$table_header .= '<th style="width:15em;">'.UOJLocale::get('contests::start time').'</th>';
+		$table_header .= '<th style="width:100px;">'.UOJLocale::get('contests::duration').'</th>';
+		$table_header .= '<th style="width:100px;">'.UOJLocale::get('contests::the number of registrants').'</th>';
+		$table_header .= '<th style="width:180px;">'.UOJLocale::get('appraisal').'</th>';
+		$table_header .= '</tr>';
+		echoLongTable(array('*'), 'contests', "status != 'finished'", 'order by start_time asc, id asc', $table_header,
+			echoContest,
+			array('page_len' => 100)
+		);
 
-<h4><?= UOJLocale::get('contests::ended contests') ?></h4>
-<?php
-	echoLongTable(array('*'), 'contests', "status = 'finished'", 'order by start_time desc, id desc', $table_header,
-		echoContest,
-		array('page_len' => 100,
-			'print_after_table' => function() {
-				global $myUser;
-				if (isSuperUser($myUser)) {
-					echo '<div class="text-right">';
-					echo '<a href="/contest/new" class="btn btn-primary">'.UOJLocale::get('contests::add new contest').'</a>';
-					echo '</div>';
+		if ($rest_second <= 86400) {
+			$notification = json_encode($upcoming_contest_name . " 已经开始了。是否要跳转到比赛页面？");
+			echo <<<EOD
+	<div class="text-center bot-buffer-lg">
+	<div class="text-warning">$upcoming_contest_name 倒计时</div>
+	<div id="contest-countdown"></div>
+	<script type="text/javascript">
+	$('#contest-countdown').countdown($rest_second, function() {
+		if (confirm($notification)) {
+			window.location.href = "$upcoming_contest_href";
+		}
+	});
+	</script>
+	</div>
+	EOD;
+		}
+	?>
+
+	<h4><?= UOJLocale::get('contests::ended contests') ?></h4>
+	<?php
+		echoLongTable(array('*'), 'contests', "status = 'finished'", 'order by start_time desc, id desc', $table_header,
+			echoContest,
+			array('page_len' => 100,
+				'print_after_table' => function() {
+					global $myUser;
+					if (isSuperUser($myUser)) {
+						echo '<div class="text-right">';
+						echo '<a href="/contest/new" class="btn btn-primary">'.UOJLocale::get('contests::add new contest').'</a>';
+						echo '</div>';
+					}
 				}
-			}
-		)
-	);
-?>
+			)
+		);
+	?>
+</div>
+
 <?php echoUOJPageFooter() ?>

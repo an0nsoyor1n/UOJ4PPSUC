@@ -523,8 +523,8 @@ function echoSubmissionContent($submission, $requirement) {
 					$sh_class = '';
 					break;
 			}
-			echo '<div class="card border-info mb-3">';
-			echo '<div class="card-header bg-info">';
+			echo '<div class="card border border-black mb-3 shadow-lg" style="border-radius: 25px;">';
+			echo '<div class="card-header">';
 			echo '<h4 class="card-title">'.$req['name'].'</h4>';
 			echo '</div>';
 			echo '<div class="card-body">';
@@ -537,7 +537,7 @@ function echoSubmissionContent($submission, $requirement) {
 			$file_content = strOmit($file_content, 500);
 			$file_content = uojTextEncode($file_content, array('allow_CR' => true, 'html_escape' => true));
 			$footer_text = UOJLocale::get('problems::text file');
-			echo '<div class="card border-info mb-3">';
+			echo '<div class="card border border-black mb-3 shadow-lg" style="border-radius: 25px;">';
 			echo '<div class="card-header bg-info">';
 			echo '<h4 class="card-title">'.$req['file_name'].'</h4>';
 			echo '</div>';

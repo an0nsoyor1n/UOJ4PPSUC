@@ -27,7 +27,7 @@ EOD;
 	</div>
 </div>
 <?php endif ?>
-<div class='shadow rounded' style='padding: 20px;'>
+<div class='shadow-lg rounded' style='padding: 20px;'>
 	<h3><?= UOJLocale::get('blog Overview') ?></h3>
 	<?php echoLongTable(array('id', 'poster', 'title', 'post_time', 'zan'), 'blogs', 'is_hidden = 0', 'order by post_time desc', $header, 'echoBlogCell', $config); ?>
 </div>

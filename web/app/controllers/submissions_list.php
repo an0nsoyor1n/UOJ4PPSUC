@@ -31,7 +31,7 @@
 	}
 ?>
 <?php echoUOJPageHeader(UOJLocale::get('submissions')) ?>
-<div class='d-none d-sm-block shadow rounded' style='padding: 20px;'>
+<div class='d-none d-sm-block shadow-lg rounded' style='padding: 20px;'>
 	<?php if ($myUser != null): ?>
 	<div class="float-right">
 		<a href="/submissions?submitter=<?= $myUser['username'] ?>" class="btn btn-primary btn-sm"><?= UOJLocale::get('problems::my submissions') ?></a>
