@@ -4,6 +4,7 @@
   <img src="./CyberSwat.png" alt="CyberSwat" style="display: block; margin: auto; width: 50%;">
 </p>
 
+| [中文简体](./readme-zh.md) | [English](./readme-en.md)|
 
 **The source code of Online Judge system of PPSUC, focusing on the training of programming skills.**
 

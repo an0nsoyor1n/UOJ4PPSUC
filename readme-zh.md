@@ -4,6 +4,8 @@
   <img src="./CyberSwat.png" alt="CyberSwat" style="display: block; margin: auto; width: 50%;">
 </p>
 
+| [中文简体](./readme-zh.md) | [English](./readme-en.md)|
+
 **PPSUC 在线评测系统的源代码，专注于编程技能的培训。**
 
 - 支持多种编程语言，包括 **C/C++**、**Java**、**Python**。
