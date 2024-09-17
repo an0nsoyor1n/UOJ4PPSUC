@@ -1,4 +1,9 @@
 <?php
+
+$oj_name_short = UOJConfig::$data['profile']['oj-name-short'];
+$oj_name = UOJConfig::$data['profile']['oj-name'];
+
+
 return [
 	'platform and contest' => '常见编程比赛和编程练习平台',
 	'detail' => '了解更多',
@@ -16,4 +21,12 @@ return [
 	'PKU JudgeOnline' => '北京大学在线评测系统',
 	'Luogu' => '洛谷',
 	'Virtual Judge' => 'Virtual Judge',
+	'welcome' => '欢迎来到' . $oj_name_short . ' !',
+	'welcome intro' => $oj_name_short . '(全称' . $oj_name . ')是一个在线编程练习平台，旨在帮助在校同学们提高编程技能水平，为以后的工作和科研打下坚实的计算机技术基础。',
+	'welcome intro1 title' => '支持多种编程语言',
+	'welcome intro1' => $oj_name_short . '平台支持多种编程语言，包括C/C++、Python、Java。无论想学哪个都可以！',
+	'welcome intro2 title' => '基于成熟框架开发',
+	'welcome intro2' => $oj_name_short . '基于UOJ开发，支持包括中英文在内的7种语言，提供成熟的练习体验！',
+	'welcome intro3 title' => '包含多种课程练习',
+	'welcome intro3' => $oj_name_short . '包含多种课程的练习题。C语言，Python，数据结构相关的练习题这里都有，提交你的代码试试看！',
 ];

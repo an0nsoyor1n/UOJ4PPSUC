@@ -1,4 +1,9 @@
 <?php
+
+$oj_name_short = UOJConfig::$data['profile']['oj-name-short'];
+$oj_name = UOJConfig::$data['profile']['oj-name'];
+
+
 return [
 	'platform and contest' => 'Common programming competitions and exercise platforms',
 	'detail' => 'Learn more',
@@ -16,4 +21,13 @@ return [
 	'PKU JudgeOnline' => 'Peking University Online Judge',
 	'Luogu' => 'Luogu',
 	'Virtual Judge' => 'Virtual Judge',
+	'welcome' => 'Welcome to ' . $oj_name_short . '!',
+	'welcome intro' => $oj_name_short . ' (full name ' . $oj_name . ') is an online programming practice platform designed to help students improve their programming skills and build a solid foundation for future work and research in computer technology.',
+	'welcome intro1 title' => 'Supports Multiple Programming Languages',
+	'welcome intro1' => $oj_name_short . ' supports various programming languages including C/C++ , Python, and Java. You can learn any of them!',
+	'welcome intro2 title' => 'Developed on a Mature Framework',
+	'welcome intro2' => $oj_name_short . ' is based on UOJ and supports 7 languages including Chinese and English, providing a mature practice experience!',
+	'welcome intro3 title' => 'Includes Various Course Exercises',
+	'welcome intro3' => $oj_name_short . ' includes practice problems from various courses. Whether it\'s C language, Python, or data structures, you can find exercises here. Submit your code and give it a try!'
+
 ];

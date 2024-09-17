@@ -1,4 +1,9 @@
 <?php
+
+$oj_name_short = UOJConfig::$data['profile']['oj-name-short'];
+$oj_name = UOJConfig::$data['profile']['oj-name'];
+
+
 return [
 	'platform and contest' => 'Concours de programmation et plateformes d\'exercices courants',
 	'detail' => 'En savoir plus',
@@ -16,4 +21,13 @@ return [
 	'PKU JudgeOnline' => 'Système de Jugement en Ligne de l’Université de Pékin',
 	'Luogu' => 'Luogu',
 	'Virtual Judge' => 'Virtual Judge',
+	'welcome' => 'Bienvenue sur ' . $oj_name_short . '!',
+	'welcome intro' => $oj_name_short . ' (nom complet ' . $oj_name . ') est une plateforme en ligne pour la pratique de la programmation, conçue pour aider les étudiants à améliorer leurs compétences en programmation et à poser des bases solides pour leur futur travail et recherche en technologie informatique.',
+	'welcome intro1 title' => 'Supporte plusieurs langages de programmation',
+	'welcome intro1' => $oj_name_short . ' prend en charge plusieurs langages de programmation, dont C/C++ , Python et Java. Vous pouvez en apprendre un ou plusieurs!',
+	'welcome intro2 title' => 'Développé sur un cadre mature',
+	'welcome intro2' => $oj_name_short . ' est basé sur UOJ et supporte 7 langues, dont le chinois et l’anglais, offrant une expérience de pratique mature!',
+	'welcome intro3 title' => 'Inclut divers exercices de cours',
+	'welcome intro3' => $oj_name_short . ' inclut des problèmes de pratique de divers cours. Que ce soit en C, Python ou en structures de données, vous trouverez des exercices ici. Soumettez votre code et essayez-le!'
+
 ];

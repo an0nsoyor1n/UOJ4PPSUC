@@ -3,7 +3,49 @@
 ?>
 <?php echoUOJPageHeader(UOJConfig::$data['profile']['oj-name-short']) ?>
 
+<!--开头块-->
+<div style='margin:40px'>
+	<h2 style='margin:10px'><?= UOJLocale::get('mainpage::welcome') ?></h2>
+	<div class="row row-cols-1 row-cols-md-3 g-4">
+		<div class="col">
+		<div class="card h-100">
+		  <img src="/images/UOJ.png" class="card-img-top" alt="...">
+		  <div class="card-body">
+			<h5 class="card-title"><?= UOJLocale::get('mainpage::welcome intro2 title') ?></h5>
+			<p class="card-text"><?= UOJLocale::get('mainpage::welcome intro2') ?></p>
+		  </div>
+		  <div class="card-footer">
+			<small class="text-muted">Last updated</small>
+		  </div>
+		</div>
+	  </div>
+	  <div class="col">
+		<div class="card h-100">
+		  <img src="/images/codinglanguage.png" class="card-img-top" alt="...">
+		  <div class="card-body">
+			<h5 class="card-title"><?= UOJLocale::get('mainpage::welcome intro1 title') ?></h5>
+			<p class="card-text"><?= UOJLocale::get('mainpage::welcome intro1') ?></p>
+		  </div>
+		  <div class="card-footer">
+			<small class="text-muted">Last updated</small>
+		  </div>
+		</div>
+	  </div>
 
+	  <div class="col">
+		<div class="card h-100">
+		  <img src="/images/ds.jpeg" class="card-img-top" alt="...">
+		  <div class="card-body">
+			<h5 class="card-title"><?= UOJLocale::get('mainpage::welcome intro3 title') ?></h5>
+			<p class="card-text"><?= UOJLocale::get('mainpage::welcome intro3') ?></p>
+		  </div>
+		  <div class="card-footer">
+			<small class="text-muted">Last updated</small>
+		  </div>
+		</div>
+	  </div>
+	</div>
+</div>
 
 <!--公告块-->
 <h3><?= UOJLocale::get('announcements') ?></h3>

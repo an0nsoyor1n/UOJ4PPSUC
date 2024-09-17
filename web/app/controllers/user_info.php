@@ -22,8 +22,8 @@
 		}
 		$esc_motto = HTML::escape($user['motto']);
 	?>
-	<div class="card border-info">
-		<h5 class="card-header bg-info"><?= UOJLocale::get('user profile') ?></h5>
+	<div class="card border border-black mb-3 shadow-lg" style="border-radius: 25px;">
+		<h5 class="card-header"><?= UOJLocale::get('user profile') ?></h5>
 		<div class="card-body">
 			<div class="row mb-4">
 				<div class="col-md-4 order-md-9">

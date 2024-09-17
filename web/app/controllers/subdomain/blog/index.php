@@ -16,7 +16,7 @@
 <div class="row">
 	<div class="col-md-9">
 		<?php if ($blogs_pag->isEmpty()): ?>
-		<div class="text-muted">此人很懒，什么博客也没留下。</div>
+		<div class="text-muted">此人很懒，什么也没留下。</div>
 		<?php else: ?>
 		<?php foreach ($blogs_pag->get() as $blog): ?>
 			<?php echoBlog($blog, array('is_preview' => true)) ?>
