@@ -2,9 +2,9 @@
 return [
 	'profile' => [
 		'oj-name' => 'PPSUC Online Judge',
-		'oj-name-short' => 'PPSUCOJ',
-		'administrator' => 'root',
-		'admin-email' => 'admin@local_uoj.ac',
+		'oj-name-short' => 'PPSUC OJ',
+		'administrator' => 'CyberSWAT TEAM',
+		'admin-email' => 'CyberSWAT@ppsuc.cn',
 		'QQ-group' => '',
 		'ICP-license' => ''
 	],

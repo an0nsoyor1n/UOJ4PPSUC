@@ -94,6 +94,10 @@ docker load -i ./uoj-judger.tar
 
 然后运行 ``docker compose`` 命令。由于镜像是从本地磁盘加载的，构建过程会很快。
 
+# 管理
+
+PPSUC OJ的管理配置（包含管理员配置、题目添加与修改配置、比赛配置等）和UOJ一样，详情查看[UOJ文档](https://universaloj.github.io/post/%E9%A2%98%E7%9B%AE%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0.html)
+
 # 开发
 
 前端开发的详细信息请参见 [frontend readme](web/readme.md)。
