@@ -54,3 +54,6 @@ We use mounted volumes to store the data of the project, so you can modify the c
 
 # Development
 
+Details of development of the frontend can be found in [frontend readme](frontend/README.md).
+
+Other details can be found in [Official Documentation](https://universaloj.github.io/).
