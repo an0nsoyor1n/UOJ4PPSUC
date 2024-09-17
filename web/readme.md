@@ -35,3 +35,10 @@ The web folder contains the source code for the front end of the PPSUCOJ system.
 - Blog page and blog list: web/app/controllers/blogs.php
 - faq: web/app/controllers/faq.php
 - localize (language configure) file: web/app/models/UOJLocale.php
+
+## Style of PPSUC OJ
+
+To establish a concise and clear style of PPSUC OJ's front end, we have made some modifications to the original code.
+- Replace the original information block class ``class='d-none d-sm-block'`` with ``class="d-none d-sm-block shadow-lg rounded" style='padding: 20px;'``
+- Replace the original submission information block ``<div class="card border-info">`` with ``<div class="card border border-black mb-3 shadow-lg" style="border-radius: 25px;">``
+- Add an outside div to the submission statistics block, and set the style to ``<div class="d-none d-sm-block rounded" style="padding: 20px;box-shadow: 5px 10px 15px 5px rgba(0, 0, 0, 0.3);">``

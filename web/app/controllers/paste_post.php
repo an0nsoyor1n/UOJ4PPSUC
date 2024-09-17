@@ -33,5 +33,7 @@ $paste_form = newSubmissionForm('paste',
 $paste_form->succ_href = '/paste';
 $paste_form->runAtServer();
 echoUOJPageHeader("Paste!");
+
 $paste_form->printHTML();
+
 echoUOJPageFooter();

@@ -212,63 +212,66 @@ EOD
 	$time_limit = $limit['time_limit'];
 	$memory_limit = $limit['memory_limit'];
 ?>
-<div class="row d-flex justify-content-center">
-	<span class="badge badge-secondary mr-1">时间限制:<?=$time_limit!=null?"$time_limit s":"N/A"?></span>
-	<span class="badge badge-secondary mr-1">空间限制:<?=$memory_limit!=null?"$memory_limit MB":"N/A"?></span>
-</div>
-<div class="float-right">
-	<?= getClickZanBlock('P', $problem['id'], $problem['zan']) ?>
-</div>
+<div class="d-none d-sm-block rounded" style="padding: 20px;box-shadow: 5px 10px 15px 5px rgba(0, 0, 0, 0.3);">
+	<div class="row d-flex justify-content-center">
+		<span class="badge badge-secondary mr-1">时间限制:<?=$time_limit!=null?"$time_limit s":"N/A"?></span>
+		<span class="badge badge-secondary mr-1">空间限制:<?=$memory_limit!=null?"$memory_limit MB":"N/A"?></span>
+	</div>
+	<div class="float-right">
+		<?= getClickZanBlock('P', $problem['id'], $problem['zan']) ?>
+	</div>
 
-<?php if ($contest): ?>
-<div class="page-header row">
-	<h1 class="col-md-3 text-left"><small><?= $contest['name'] ?></small></h1>
-	<h1 class="col-md-7 text-center"><?= $problem_letter ?>. <?= $problem['title'] ?></h1>
-	<div class="col-md-2 text-right" id="contest-countdown"></div>
-</div>
-<a role="button" class="btn btn-info float-right" href="/contest/<?= $contest['id'] ?>/problem/<?= $problem['id'] ?>/statistics"><span class="glyphicon glyphicon-stats"></span> <?= UOJLocale::get('problems::statistics') ?></a>
-<?php if ($contest['cur_progress'] <= CONTEST_IN_PROGRESS): ?>
-<script type="text/javascript">
-checkContestNotice(<?= $contest['id'] ?>, '<?= UOJTime::$time_now_str ?>');
-$('#contest-countdown').countdown(<?= $contest['end_time']->getTimestamp() - UOJTime::$time_now->getTimestamp() ?>);
-</script>
-<?php endif ?>
-<?php else: ?>
-<h1 class="page-header text-center">#<?= $problem['id']?>. <?= $problem['title'] ?></h1>
-<a role="button" class="btn btn-info float-right" href="/problem/<?= $problem['id'] ?>/statistics"><span class="glyphicon glyphicon-stats"></span> <?= UOJLocale::get('problems::statistics') ?></a>
-<?php endif ?>
-
-<ul class="nav nav-tabs" role="tablist">
-	<li class="nav-item"><a class="nav-link active" href="#tab-statement" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-book"></span> <?= UOJLocale::get('problems::statement') ?></a></li>
-	<li class="nav-item"><a class="nav-link" href="#tab-submit-answer" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-upload"></span> <?= UOJLocale::get('problems::submit') ?></a></li>
-	<?php if ($custom_test_requirement): ?>
-	<li class="nav-item"><a class="nav-link" href="#tab-custom-test" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-console"></span> <?= UOJLocale::get('problems::custom test') ?></a></li>
-	<?php endif ?>
-	<?php if (hasProblemPermission($myUser, $problem)): ?>
-	<li class="nav-item"><a class="nav-link" href="/problem/<?= $problem['id'] ?>/manage/statement" role="tab"><?= UOJLocale::get('problems::manage') ?></a></li>
-	<?php endif ?>
 	<?php if ($contest): ?>
-	<li class="nav-item"><a class="nav-link" href="/contest/<?= $contest['id'] ?>" role="tab"><?= UOJLocale::get('contests::back to the contest') ?></a></li>
-	<?php endif ?>
-</ul>
-<div class="tab-content">
-	<div class="tab-pane active" id="tab-statement">
-		<article class="top-buffer-md"><?= $problem_content['statement'] ?></article>
+	<div class="page-header row">
+		<h1 class="col-md-3 text-left"><small><?= $contest['name'] ?></small></h1>
+		<h1 class="col-md-7 text-center"><?= $problem_letter ?>. <?= $problem['title'] ?></h1>
+		<div class="col-md-2 text-right" id="contest-countdown"></div>
 	</div>
-	<div class="tab-pane" id="tab-submit-answer">
-		<div class="top-buffer-sm"></div>
-		<?php if ($can_use_zip_upload): ?>
-		<?php $zip_answer_form->printHTML(); ?>
-		<hr />
-		<strong><?= UOJLocale::get('problems::or upload files one by one') ?><br /></strong>
+
+	<a role="button" class="btn btn-info float-right" href="/contest/<?= $contest['id'] ?>/problem/<?= $problem['id'] ?>/statistics"><span class="glyphicon glyphicon-stats"></span> <?= UOJLocale::get('problems::statistics') ?></a>
+	<?php if ($contest['cur_progress'] <= CONTEST_IN_PROGRESS): ?>
+	<script type="text/javascript">
+	checkContestNotice(<?= $contest['id'] ?>, '<?= UOJTime::$time_now_str ?>');
+	$('#contest-countdown').countdown(<?= $contest['end_time']->getTimestamp() - UOJTime::$time_now->getTimestamp() ?>);
+	</script>
+	<?php endif ?>
+	<?php else: ?>
+	<h1 class="page-header text-center">#<?= $problem['id']?>. <?= $problem['title'] ?></h1>
+	<a role="button" class="btn btn-info float-right" href="/problem/<?= $problem['id'] ?>/statistics"><span class="glyphicon glyphicon-stats"></span> <?= UOJLocale::get('problems::statistics') ?></a>
+	<?php endif ?>
+
+	<ul class="nav nav-tabs" role="tablist">
+		<li class="nav-item"><a class="nav-link active" href="#tab-statement" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-book"></span> <?= UOJLocale::get('problems::statement') ?></a></li>
+		<li class="nav-item"><a class="nav-link" href="#tab-submit-answer" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-upload"></span> <?= UOJLocale::get('problems::submit') ?></a></li>
+		<?php if ($custom_test_requirement): ?>
+		<li class="nav-item"><a class="nav-link" href="#tab-custom-test" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-console"></span> <?= UOJLocale::get('problems::custom test') ?></a></li>
 		<?php endif ?>
-		<?php $answer_form->printHTML(); ?>
+		<?php if (hasProblemPermission($myUser, $problem)): ?>
+		<li class="nav-item"><a class="nav-link" href="/problem/<?= $problem['id'] ?>/manage/statement" role="tab"><?= UOJLocale::get('problems::manage') ?></a></li>
+		<?php endif ?>
+		<?php if ($contest): ?>
+		<li class="nav-item"><a class="nav-link" href="/contest/<?= $contest['id'] ?>" role="tab"><?= UOJLocale::get('contests::back to the contest') ?></a></li>
+		<?php endif ?>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="tab-statement">
+			<article class="top-buffer-md"><?= $problem_content['statement'] ?></article>
+		</div>
+		<div class="tab-pane" id="tab-submit-answer">
+			<div class="top-buffer-sm"></div>
+			<?php if ($can_use_zip_upload): ?>
+			<?php $zip_answer_form->printHTML(); ?>
+			<hr />
+			<strong><?= UOJLocale::get('problems::or upload files one by one') ?><br /></strong>
+			<?php endif ?>
+			<?php $answer_form->printHTML(); ?>
+		</div>
+		<?php if ($custom_test_requirement): ?>
+		<div class="tab-pane" id="tab-custom-test">
+			<div class="top-buffer-sm"></div>
+			<?php $custom_test_form->printHTML(); ?>
+		</div>
+		<?php endif ?>
 	</div>
-	<?php if ($custom_test_requirement): ?>
-	<div class="tab-pane" id="tab-custom-test">
-		<div class="top-buffer-sm"></div>
-		<?php $custom_test_form->printHTML(); ?>
-	</div>
-	<?php endif ?>
 </div>
 <?php echoUOJPageFooter() ?>

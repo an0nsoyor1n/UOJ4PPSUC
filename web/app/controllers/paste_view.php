@@ -8,5 +8,7 @@ if (!$paste) {
 }
 $REQUIRE_LIB['shjs'] = "";
 echoUOJPageHeader("Paste!");
-echoPasteContent($paste);
+<div class="d-none d-sm-block rounded" style="padding: 20px;box-shadow: 5px 10px 15px 5px rgba(0, 0, 0, 0.5);">
+	echoPasteContent($paste);
+</div>
 echoUOJPageFooter();
