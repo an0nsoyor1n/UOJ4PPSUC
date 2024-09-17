@@ -93,6 +93,11 @@ docker load -i ./uoj-judger.tar
 
 Then run the command of ``docker compose``.The process will be fast because the images are loaded from the local disk instead of the network.
 
+# Management
+
+The management configuration of PPSUC OJ (including administrator configuration, question addition and modification configuration, competition configuration, etc.) is the same as UOJ. For details, please refer to the [UOJ document](https://universaloj.github.io/post/%E9%A2%98%E7%9B%AE%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0.html)
+
+
 # Development
 
 Details of development of the frontend can be found in [frontend readme](web/readme.md).
