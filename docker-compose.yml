@@ -19,6 +19,8 @@ services:
         # 数据卷，将宿主机的目录挂载到容器的目录上
         volumes:
             - ./uoj_data/db/mysql:/var/lib/mysql
+            - ./db:/opt/uoj_db
+            - ./db/init.sql:/docker-entrypoint-initdb.d/003-init.sql
         # 环境变量配置
         environment:
             - MYSQL_DATABASE=app_uoj233

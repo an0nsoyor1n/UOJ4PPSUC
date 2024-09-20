@@ -10,7 +10,7 @@
 </ul>
 <div class="tab-content">
 	<div class="tab-pane active" id="tab-question">
-		<h3>提问</h3>
+		<h3><?= UOJLocale::get('contests::question') ?></h3>
 		<?php uojIncludeView('contest-question-table', ['pag' => $questions_pag, 'can_reply' => true, 'reply_question' => $reply_question]) ?>
 	</div>
 	<?php if ($post_notice): ?>

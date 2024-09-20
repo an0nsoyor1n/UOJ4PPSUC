@@ -10,9 +10,9 @@ if (!isset($can_reply)) {
 	<table class="table table-bordered table-hover table-vertical-middle table-text-center">
 		<thead>
 			<tr>
-				<th style="width:10em">提问者</th>
-				<th style="width:7em">提问时间</th>
-				<th>问题</th>
+				<th style="width:10em"><?= UOJLocale::get('contests::asker') ?></th>
+				<th style="width:7em"><?= UOJLocale::get('contests::question time') ?></th>
+				<th><?= UOJLocale::get('contests::question content') ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -26,14 +26,14 @@ if (!isset($can_reply)) {
 						<div class="question-content uoj-readmore"><?= HTML::escape($question['question']) ?></div>
 						<?php if ($can_reply): ?>
 							<div class="text-right">
-								<button type="button" class="btn btn-primary btn-xs question-reply-button">编辑回复</button>
+								<button type="button" class="btn btn-primary btn-xs question-reply-button"><?= UOJLocale::get('contests::edit reply') ?></button>
 							</div>
 						<?php endif ?>
 						<hr class="top-buffer-sm bot-buffer-md" />
 						<?php if ($question['answer'] === ''): ?>
-							<div class="question-content"><strong class="text-muted">暂无回复</strong></div>
+							<div class="question-content"><strong class="text-muted"><?= UOJLocale::get('contests::no reply') ?></strong></div>
 						<?php else: ?>
-							<div class="question-content uoj-readmore"><strong class="text-danger">回复：</strong><span class="text-warning"><?= HTML::escape($question['answer']) ?></span></div>
+							<div class="question-content uoj-readmore"><strong class="text-danger"><?= UOJLocale::get('contests::reply') ?>：</strong><span class="text-warning"><?= HTML::escape($question['answer']) ?></span></div>
 						<?php endif ?>
 					</td>
 				</tr>

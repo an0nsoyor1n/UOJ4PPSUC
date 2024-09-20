@@ -16,6 +16,9 @@ ADD . /opt/uoj_db
 # 设置容器的工作目录为/opt/uoj_db
 WORKDIR /opt/uoj_db
 
+# ENTRYPOINT ["sh", "-c", "mysql-server & ${COMMAND}"]
+
+
 # 运行安装脚本进行环境配置
 RUN sh install.sh
 

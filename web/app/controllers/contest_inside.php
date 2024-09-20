@@ -12,7 +12,14 @@
 			die();
 		} elseif ($contest['cur_progress'] == CONTEST_IN_PROGRESS) {
 			if ($myUser == null || !hasRegistered(Auth::user(), $contest)) {
-				becomeMsgPage("<h1>比赛正在进行中</h1><p>很遗憾，您尚未报名。比赛结束后再来看吧～</p>");
+				becomeMsgPage("<h1>比赛正在进行中</h1><p>很遗憾，您尚未报名。比赛结束后再来看吧～</p>
+								<h1>The contest is ongoing</h1><p>Unfortunately, you have not registered yet. Please come back after the contest ends~</p>
+								<h3>Конкурс в разгаре</h1><p>К сожалению, вы еще не зарегистрировались. Пожалуйста, вернитесь после окончания конкурса~</p>
+								<h3>Der Wettbewerb läuft</h1><p>Leider haben Sie sich noch nicht angemeldet. Bitte kommen Sie nach dem Ende des Wettbewerbs wieder~</p>
+								<h3>Le concours est en cours</h1><p>Désolé, vous ne vous êtes pas encore inscrit. Veuillez revenir après la fin du concours~</p>
+								<h3>El concurso está en curso</h1><p>Desafortunadamente, no te has registrado aún. Vuelve después de que termine el concurso~</p>
+								<h3>O concurso está em andamento</h1><p>Infelizmente, você ainda não se registrou. Por favor, volte depois que o concurso terminar~</p>
+				");
 			}
 		}
 	}
@@ -418,8 +425,8 @@ EOD;
 		$time_str = UOJTime::$time_now_str;
 		$contest_ends_in = UOJLocale::get('contests::contest ends in');
 		echo <<<EOD
- 		<div class="card border-info">
- 			<div class="card-header bg-info">
+ 		<div class="card rounded">
+ 			<div class="card-header bg-danger text-white">
  				<h3 class="card-title">$contest_ends_in</h3>
  			</div>
  			<div class="card-body text-center countdown" data-rest="$rest_second"></div>
@@ -469,93 +476,95 @@ EOD;
 	$page_header = HTML::stripTags($contest['name']) . ' - ';
 ?>
 <?php echoUOJPageHeader(HTML::stripTags($contest['name']) . ' - ' . $tabs_info[$cur_tab]['name'] . ' - ' . UOJLocale::get('contests::contest')) ?>
-<div class="text-center">
-	<h1><?= $contest['name'] ?></h1>
-	<?= getClickZanBlock('C', $contest['id'], $contest['zan']) ?>
-</div>
-<div class="row">
-	<?php if ($cur_tab == 'standings'): ?>
-	<div class="col-sm-12">
-	<?php else: ?>
-	<div class="col-sm-9">
-	<?php endif ?>
-		<?= HTML::tablist($tabs_info, $cur_tab) ?>
-		<div class="top-buffer-md">
-		<?php
-			if ($cur_tab == 'dashboard') {
-				echoDashboard();
-			} elseif ($cur_tab == 'submissions') {
-				echoMySubmissions();
-			} elseif ($cur_tab == 'standings') {
-				echoStandings();
-			} elseif ($cur_tab == 'backstage') {
-				echoBackstage();
-			}
-		?>
-		</div>
+<div class="d-none d-sm-block" style="padding: 20px;box-shadow: 5px 10px 15px 5px rgba(0, 0, 0, 0.3);border-radius: 25px;">
+	<div class="text-center">
+		<h1><?= $contest['name'] ?></h1>
+		<?= getClickZanBlock('C', $contest['id'], $contest['zan']) ?>
 	</div>
-	
-	<?php if ($cur_tab == 'standings'): ?>
-	<div class="col-sm-12">
-		<hr />
-	</div>
-	<?php endif ?>
-
-	<div class="col-sm-3">
-		<?php
-			if ($contest['cur_progress'] <= CONTEST_IN_PROGRESS) {
-				echoContestCountdown();
-			} elseif ($contest['cur_progress'] <= CONTEST_TESTING) {
-				echoContestJudgeProgress();
-			} else {
-				echoContestFinished();
-			}
-		?>
+	<div class="row">
 		<?php if ($cur_tab == 'standings'): ?>
-	</div>
-	<div class="col-sm-3">
-	<?php endif ?>
-	<?php if (!isset($contest['extra_config']['contest_type']) || $contest['extra_config']['contest_type']=='OI'):?>
-	<p>此次比赛为OI赛制。</p>
-	<p><strong>注意：比赛时只显示测样例的结果。</strong></p>
-	<?php elseif ($contest['extra_config']['contest_type']=='IOI'):?>
-	<p>此次比赛为IOI赛制。</p>
-	<p><strong>注意：比赛时显示测试所有数据的结果，但无法看到详细信息。</strong></p>
-	<?php endif?>
-	
-		<a href="/contest/<?=$contest['id']?>/registrants" class="btn btn-info btn-block"><?= UOJLocale::get('contests::contest registrants') ?></a>
-		<?php if (isSuperUser($myUser)): ?>
-		<a href="/contest/<?=$contest['id']?>/manage" class="btn btn-primary btn-block">管理</a>
-		<?php if (isset($start_test_form)): ?>
-		<div class="top-buffer-sm">
-			<?php $start_test_form->printHTML(); ?>
-		</div>
-		<?php endif ?>
-		<?php if (isset($publish_result_form)): ?>
-		<div class="top-buffer-sm">
-			<?php $publish_result_form->printHTML(); ?>
-		</div>
-		<?php endif ?>
-		<?php endif ?>
-	
-		<?php if ($contest['extra_config']['links']) { ?>
-			<?php if ($cur_tab == 'standings'): ?>
-	</div>
-	<div class="col-sm-3">
-		<div class="card border-info">
+		<div class="col-sm-12">
 		<?php else: ?>
-		<div class="card border-info top-buffer-lg">
+		<div class="col-sm-9">
 		<?php endif ?>
-			<div class="card-header bg-info">
-				<h3 class="card-title">比赛资料</h3>
-			</div>
-			<div class="list-group">
-			<?php foreach ($contest['extra_config']['links'] as $link) { ?>
-				<a href="/blogs/<?=$link[1]?>" class="list-group-item"><?=$link[0]?></a>
-			<?php } ?>
+			<?= HTML::tablist($tabs_info, $cur_tab) ?>
+			<div class="top-buffer-md">
+			<?php
+				if ($cur_tab == 'dashboard') {
+					echoDashboard();
+				} elseif ($cur_tab == 'submissions') {
+					echoMySubmissions();
+				} elseif ($cur_tab == 'standings') {
+					echoStandings();
+				} elseif ($cur_tab == 'backstage') {
+					echoBackstage();
+				}
+			?>
 			</div>
 		</div>
-		<?php } ?>
+
+		<?php if ($cur_tab == 'standings'): ?>
+		<div class="col-sm-12">
+			<hr />
+		</div>
+		<?php endif ?>
+
+		<div class="col-sm-3">
+			<?php
+				if ($contest['cur_progress'] <= CONTEST_IN_PROGRESS) {
+					echoContestCountdown();
+				} elseif ($contest['cur_progress'] <= CONTEST_TESTING) {
+					echoContestJudgeProgress();
+				} else {
+					echoContestFinished();
+				}
+			?>
+			<?php if ($cur_tab == 'standings'): ?>
+		</div>
+		<div class="col-sm-3">
+		<?php endif ?>
+		<?php if (!isset($contest['extra_config']['contest_type']) || $contest['extra_config']['contest_type']=='OI'):?>
+		<p><?= UOJLocale::get('contests::OI tips1') ?></p>
+		<p><strong><?= UOJLocale::get('contests::OI tips2') ?></strong></p>
+		<?php elseif ($contest['extra_config']['contest_type']=='IOI'):?>
+		<p><?= UOJLocale::get('contests::IOI tips1') ?></p>
+		<p><strong><?= UOJLocale::get('contests::IOI tips2') ?></strong></p>
+		<?php endif?>
+
+			<a href="/contest/<?=$contest['id']?>/registrants" class="btn btn-info btn-block"><?= UOJLocale::get('contests::contest registrants') ?></a>
+			<?php if (isSuperUser($myUser)): ?>
+			<a href="/contest/<?=$contest['id']?>/manage" class="btn btn-primary btn-block">管理</a>
+			<?php if (isset($start_test_form)): ?>
+			<div class="top-buffer-sm">
+				<?php $start_test_form->printHTML(); ?>
+			</div>
+			<?php endif ?>
+			<?php if (isset($publish_result_form)): ?>
+			<div class="top-buffer-sm">
+				<?php $publish_result_form->printHTML(); ?>
+			</div>
+			<?php endif ?>
+			<?php endif ?>
+
+			<?php if ($contest['extra_config']['links']) { ?>
+				<?php if ($cur_tab == 'standings'): ?>
+		</div>
+		<div class="col-sm-3">
+			<div class="card border-info">
+			<?php else: ?>
+			<div class="card border-info top-buffer-lg">
+			<?php endif ?>
+				<div class="card-header bg-info">
+					<h3 class="card-title">比赛资料</h3>
+				</div>
+				<div class="list-group">
+				<?php foreach ($contest['extra_config']['links'] as $link) { ?>
+					<a href="/blogs/<?=$link[1]?>" class="list-group-item"><?=$link[0]?></a>
+				<?php } ?>
+				</div>
+			</div>
+			<?php } ?>
+		</div>
 	</div>
 </div>
 <?php echoUOJPageFooter() ?>

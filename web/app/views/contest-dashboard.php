@@ -48,7 +48,7 @@
 
 <?php if ($post_notice): ?>
 	<div class="text-center">
-		<button id="button-display-post-notice" type="button" class="btn btn-danger btn-xs">发布比赛公告</button>
+		<button id="button-display-post-notice" type="button" class="btn btn-danger btn-xs"><?= UOJLocale::get('contests::annouce annoucements') ?></button>
 	</div>
 	<div id="div-form-post-notice" style="display:none" class="bot-buffer-md">
 		<?php $post_notice->printHTML() ?>
@@ -62,15 +62,15 @@
 	</script>
 <?php endif ?>
 
-<h3>提问</h3>
+<h3><?= UOJLocale::get('contests::question') ?></h3>
 <?php if ($my_questions_pag != null): ?>
 	<div>
 		<?php if ($post_question): ?>
 			<div class="float-right">
-				<button id="button-display-post-question" type="button" class="btn btn-primary btn-xs">提问题</button>
+				<button id="button-display-post-question" type="button" class="btn btn-primary btn-xs"><?= UOJLocale::get('contests::ask a question') ?></button>
 			</div>
 		<?php endif ?>
-		<h4>我的提问</h4>
+		<h4><?= UOJLocale::get('contests::my question') ?></h4>
 		<?php if ($post_question): ?>
 			<div id="div-form-post-question" style="display:none" class="bot-buffer-md">
 				<?php $post_question->printHTML() ?>
@@ -89,9 +89,9 @@
 
 <div>
 	<?php if ($my_questions_pag != null): ?>
-		<h4>其他人的提问</h4>
+		<h4><?= UOJLocale::get('contests::others question') ?></h4>
 	<?php else: ?>
-		<h4>所有人的提问</h4>
+		<h4><?= UOJLocale::get('contests::all questions') ?></h4>
 	<?php endif ?>
 	<?php uojIncludeView('contest-question-table', ['pag' => $others_questions_pag]) ?>
 </div>
