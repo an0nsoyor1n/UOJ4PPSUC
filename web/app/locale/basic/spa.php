@@ -80,5 +80,8 @@ return [
     'ID' => 'Número de estudiante',
     'JID' => 'Número de insignia',
     'class' => 'Clase',
+    'enter your sid' => 'Introduce tu número de estudiante',
+    'enter your jid' => 'Introduce tu número de insignia',
+    'enter your class' => 'Introduce tu clase',
 
 ];

@@ -80,5 +80,8 @@ return [
     'ID' => 'Studierendenausweisnummer',
     'JID' => 'Namensschildnummer',
     'class' => 'Klasse',
+    'enter your sid' => 'Studierendenausweisnummer eingeben',
+    'enter your jid' => 'Namensschildnummer eingeben',
+    'enter your class' => 'Klasse eingeben',
 
 ];

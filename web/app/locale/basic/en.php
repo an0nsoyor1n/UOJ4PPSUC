@@ -80,5 +80,7 @@ return [
 	'ID' => 'Student ID',
 	'JID' => 'Name Badge Number',
 	'class' => 'Class',
-
+	'enter your sid' => 'Enter your student ID',
+	'enter your jid' => 'Enter your name badge number',
+	'enter your class' => 'Enter your class',
 ];

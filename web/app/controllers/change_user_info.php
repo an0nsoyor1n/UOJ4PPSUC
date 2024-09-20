@@ -78,6 +78,27 @@
 			<span class="help-block" id="help-password"><?= UOJLocale::get('leave it blank if you do not want to change the password') ?></span>
 		</div>
 	</div>
+	<div id="div-sid" class="form-group">
+		<label for="input-sid" class="col-sm-2 control-label"><?= UOJLocale::get('ID') ?></label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" name="sid" id="input-sid" value="<?=$myUser['sid']?>" placeholder="<?= UOJLocale::get('enter your sid') ?>" maxlength="50" />
+			<span class="help-block" id="help-sid"></span>
+		</div>
+	</div>
+	<div id="div-jid" class="form-group">
+		<label for="input-jid" class="col-sm-2 control-label"><?= UOJLocale::get('JID') ?></label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" name="jid" id="input-jid" value="<?=$myUser['jid']?>" placeholder="<?= UOJLocale::get('enter your jid') ?>" maxlength="50" />
+			<span class="help-block" id="help-jid"></span>
+		</div>
+	</div>
+	<div id="div-class" class="form-group">
+		<label for="input-class" class="col-sm-2 control-label"><?= UOJLocale::get('class') ?></label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" name="class" id="input-class" value="<?=$myUser['class']?>" placeholder="<?= UOJLocale::get('enter your class') ?>" maxlength="50" />
+			<span class="help-block" id="help-class"></span>
+		</div>
+	</div>
 	<div id="div-email" class="form-group">
 		<label for="input-email" class="col-sm-2 control-label"><?= UOJLocale::get('email') ?></label>
 		<div class="col-sm-3">
@@ -147,6 +168,9 @@
 			old_password : md5($('#input-old_password').val(), "<?= getPasswordClientSalt() ?>"),
 			qq       : $('#input-qq').val(),
 			sex      : $('#input-sex').val(),
+			sid      : $('#input-sid').val(),
+			jid      : $('#input-jid').val(),
+			class    : $('#input-class').val(),
 			motto    : $('#input-motto').val()
 		}, function(msg) {
 			if (msg == 'ok') {

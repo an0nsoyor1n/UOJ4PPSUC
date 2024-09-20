@@ -80,4 +80,7 @@ return [
 	'ID' => '学号',
 	'JID' => '名牌号(Jing 号)',
 	'class' => '班级',
+	'enter your sid' => '输入学号',
+	'enter your jid' => '输入名牌号(Jing 号)',
+	'enter your class' => '输入班级',
 ];
