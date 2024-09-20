@@ -76,5 +76,9 @@ return [
 	'graph visualization' => 'Graph Visualization',
 	'blog Overview' => 'Blog Overview',
 	'my blog home page' => 'My Blog Home Page',
-	'write a new blog' => 'Write a New Blog'
+	'write a new blog' => 'Write a New Blog',
+	'ID' => 'Student ID',
+	'JID' => 'Name Badge Number',
+	'class' => 'Class',
+
 ];

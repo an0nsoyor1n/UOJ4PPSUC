@@ -76,5 +76,8 @@ return [
 	'graph visualization' => '图可视化',
 	'blog Overview' => '博客总览',
 	'my blog home page' => '我的博客首页',
-	'write a new blog' => '写新博客'
+	'write a new blog' => '写新博客',
+	'ID' => '学号',
+	'JID' => '名牌号(Jing 号)',
+	'class' => '班级',
 ];

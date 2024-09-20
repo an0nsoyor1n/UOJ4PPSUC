@@ -10,6 +10,9 @@
 		$esc_qq = HTML::escape($user['qq'] != 0 ? $user['qq'] : 'Unfilled');
 		$esc_sex = HTML::escape($user['sex']);
 		$col_sex="color:blue";
+		$esc_sid = HTML::escape($user['sid']);
+		$esc_jid = HTML::escape($user['jid']);
+		$esc_class = HTML::escape($user['class']);
 		if ($esc_sex == "M") {
 			$esc_sex="♂";
 			$col_sex="color:blue";
@@ -47,6 +50,18 @@
 						<div class="list-group-item">
 							<h4 class="list-group-item-heading"><?= UOJLocale::get('motto') ?></h4>
 							<p class="list-group-item-text"><?= $esc_motto ?></p>
+						</div>
+						<div class="list-group-item">
+							<h4 class="list-group-item-heading"><?= UOJLocale::get('ID') ?></h4>
+							<p class="list-group-item-text"><?= $esc_sid ?></p>
+						</div>
+						<div class="list-group-item">
+							<h4 class="list-group-item-heading"><?= UOJLocale::get('JID') ?></h4>
+							<p class="list-group-item-text"><?= $esc_jid ?></p>
+						</div>
+						<div class="list-group-item">
+							<h4 class="list-group-item-heading"><?= UOJLocale::get('class') ?></h4>
+							<p class="list-group-item-text"><?= $esc_class ?></p>
 						</div>
 						<?php if (isSuperUser($myUser)): ?>
 						<div class="list-group-item">

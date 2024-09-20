@@ -12,7 +12,21 @@
 		if (!isset($_POST['email'])) {
 			return "无效表单";
 		}
-
+		if (!isset($_POST['sid'])) {
+			return "无效表单";
+		}
+		$sid = $_POST['sid'];
+		if (!preg_match('/^\d{12}$/', $sid)) {
+			return "失败：学号必须是12位数字。";
+		}
+		$esc_sid = DB::escape($sid);
+		$jid = $_POST['jid'];
+		if (strlen($jid) > 7 || strlen($jid) < 6) {
+			return "失败：名牌号必须是6位字符，当前长度为" . strlen($jid) . "，当前内容为" . $jid . "。";
+		}
+		$esc_jid = DB::escape($jid);
+		$class = $_POST['class'];
+		$esc_class = DB::escape($class);
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 		$email = $_POST['email'];
@@ -35,9 +49,9 @@
 		
 		$svn_pw = uojRandString(10);
 		if (!DB::selectCount("SELECT COUNT(*) FROM user_info")) {
-			DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup) values ('$username', '$esc_email', '$password', '$svn_pw', now(), 'S')");
+			DB::query("insert into user_info (username, email, password, svn_password, register_time, usergroup, sid, jid, class) values ('$username', '$esc_email', '$password', '$svn_pw', now(), 'S', '$esc_sid', '$esc_jid', '$esc_class')");
 		} else {
-			DB::query("insert into user_info (username, email, password, svn_password, register_time) values ('$username', '$esc_email', '$password', '$svn_pw', now())");
+			DB::query("insert into user_info (username, email, password, svn_password, register_time, sid, jid, class) values ('$username', '$esc_email', '$password', '$svn_pw', now(), '$esc_sid', '$esc_jid', '$esc_class')");
 		}
 		
 		return "欢迎你！" . $username . "，你已成功注册。";
@@ -75,6 +89,27 @@
 		<div class="col-sm-3">
 			<input type="text" class="form-control" id="input-username" name="username" placeholder="<?= UOJLocale::get('enter your username') ?>" maxlength="20" />
 			<span class="help-block" id="help-username"></span>
+		</div>
+	</div>
+	<div id="div-sid" class="form-group">
+		<label for="input-sid" class="col-sm-2 control-label"><?= UOJLocale::get('ID') ?></label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" id="input-sid" name="sid" placeholder="ID" maxlength="12" />
+			<span class="help-block" id="help-sid"></span>
+		</div>
+	</div>
+	<div id="div-jid" class="form-group"> <!-- 修改为 div-jid -->
+		<label for="input-jid" class="col-sm-2 control-label"><?= UOJLocale::get('JID') ?></label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" id="input-jid" name="jid" placeholder="<?= UOJLocale::get('JID') ?>" maxlength="6" />
+			<span class="help-block" id="help-jid"></span> <!-- 保持为 help-jid -->
+		</div>
+	</div>
+	<div id="div-class" class="form-group"> <!-- 修改为 div-class -->
+		<label for="input-class" class="col-sm-2 control-label"><?= UOJLocale::get('class') ?></label>
+		<div class="col-sm-3">
+			<input type="text" class="form-control" id="input-class" name="class" placeholder="<?= UOJLocale::get('class') ?>" maxlength="100" />
+			<span class="help-block" id="help-class"></span> <!-- 修改为 help-class -->
 		</div>
 	</div>
 	<div id="div-password" class="form-group">
@@ -140,7 +175,10 @@ function submitRegisterPost() {
 		register : '',
 		username : $('#input-username').val(),
 		email		: $('#input-email').val(),
-		password : md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>")
+		password : md5($('#input-password').val(), "<?= getPasswordClientSalt() ?>"),
+		sid : $('#input-sid').val(),
+		jid : $('#input-jid').val(),
+		class : $('#input-class').val()
 	}, function(msg) {
 		if (/^欢迎你！/.test(msg)) {
 			BootstrapDialog.show({

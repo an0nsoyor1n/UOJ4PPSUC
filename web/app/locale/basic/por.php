@@ -76,5 +76,9 @@ return [
 	'graph visualization' => 'Visualização de gráficos',
 	'blog Overview' => 'Visão Geral do Blog',
 	'my blog home page' => 'Página Inicial do Meu Blog',
-	'write a new blog' => 'Escrever um Novo Blog'
+	'write a new blog' => 'Escrever um Novo Blog',
+    'ID' => 'Número de estudiante',
+    'JID' => 'Número de insignia',
+    'class' => 'Clase',
+
 ];
