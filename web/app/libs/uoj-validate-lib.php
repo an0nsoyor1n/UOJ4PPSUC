@@ -20,6 +20,20 @@ function validateMotto($motto) {
 	return is_string($motto) && ($len = mb_strlen($motto, 'UTF-8')) !== false && $len <= 50;
 }
 
+function validateSID($sid) {
+	return preg_match('/^\d{12}$/', $sid);
+}
+
+function validateJID($jid) {
+	return is_string($jid) && strlen($jid) <= 7 && strlen($jid) >= 6;
+}
+
+function validateClass($class) {
+	return is_string($class) && strlen($class) < 100;
+}
+
+
+
 function validateUInt($x) { // [0, 1000000000)
 	if (!is_string($x)) {
 		return false;

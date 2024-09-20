@@ -287,20 +287,25 @@ $.fn.uoj_honor = function() {
 	});
 }
 
+// 显示错误提示和帮助信息
 function showErrorHelp(name, err) {
-	if (err) {
-		$('#div-' + name).addClass('has-error');
-		$('#help-' + name).text(err);
-		return false;
-	} else {
-		$('#div-' + name).removeClass('has-error');
-		$('#help-' + name).text('');
-		return true;
-	}
+    if (err) {
+        // 如果有错误，添加错误样式并显示错误信息
+        $('#div-' + name).addClass('has-error'); // 为对应的输入框 div 添加错误样式
+        $('#help-' + name).text(err); // 显示错误信息
+        return false; // 返回 false 表示验证失败
+    } else {
+        // 如果没有错误，移除错误样式并清空错误信息
+        $('#div-' + name).removeClass('has-error'); // 移除错误样式
+        $('#help-' + name).text(''); // 清空错误信息
+        return true; // 返回 true 表示验证成功
+    }
 }
+
+// 获取表单字段的错误信息并显示帮助信息
 function getFormErrorAndShowHelp(name, val) {
-	var err = val($('#input-' + name).val());
-	return showErrorHelp(name, err);
+    var err = val($('#input-' + name).val()); // 调用验证函数获取错误信息
+    return showErrorHelp(name, err); // 调用 showErrorHelp 显示错误信息
 }
 
 function validateSettingPassword(str) {

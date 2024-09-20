@@ -47,6 +47,24 @@
 			$esc_motto = DB::escape($_POST['motto']);
 			DB::update("update user_info set motto = '$esc_motto' where username = '{$myUser['username']}'");
 		}
+
+		/**/
+		if (!validateSID($_POST['sid'])) {
+			return "失败：无效学号。";
+		}
+		$esc_sid = DB::escape($_POST['sid']);
+		DB::update("update user_info set sid = '$esc_sid' where username = '{$myUser['username']}'");
+
+		if (!validateJID($_POST['jid'])) {
+			return "失败：无效JID。";
+		}
+		$esc_jid = DB::escape($_POST['jid']);
+		DB::update("update user_info set jid = '$esc_jid' where username = '{$myUser['username']}'");
+		if (!validateClass($_POST['class'])) {
+			return "失败：无效班级。";
+		}
+		$esc_class = DB::escape($_POST['class']);
+		DB::update("update user_info set class = '$esc_class' where username = '{$myUser['username']}'");
 		
 		return "ok";
 	}
@@ -153,6 +171,10 @@
 		if ($('#input-qq').val().length > 0)
 			ok &= getFormErrorAndShowHelp('qq', validateQQ);
 		ok &= getFormErrorAndShowHelp('motto', validateMotto);
+		//ok &= getFormErrorAndShowHelp('sid', validateSID);
+		//ok &= getFormErrorAndShowHelp('jid', validateJID);
+		//ok &= getFormErrorAndShowHelp('class', validateClass);
+		// 这里完全不需要写这种验证
 		return ok;
 	}
 	function submitUpdatePost() {
