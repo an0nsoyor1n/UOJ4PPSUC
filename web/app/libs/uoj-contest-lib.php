@@ -186,6 +186,49 @@ function queryContestData($contest, $config = array()) {
 
 function calcStandings($contest, $contest_data, &$score, &$standings, $update_contests_submissions = false) {
 	// score: username, problem_pos => score, penalty, id
+	/*
+	`calcStandings` 函数中生成的 `$standings` 数组的结构如下：
+
+		### `$standings` 数组结构
+
+		每个元素代表一个参赛者的排名信息，数组的结构为：
+
+		```php
+		$standings = [
+			[
+				总得分,          // int: 参赛者的总得分
+				总罚时,          // int: 参赛者的总罚时
+				[用户名, 用户评级], // array: 包含用户名和用户评级的数组
+				虚拟排名         // int: 参赛者的排名
+			],
+			// ... 其他参赛者的排名信息
+		];
+		```
+
+		### 示例
+
+		假设有三个参赛者，`Alice`、`Bob` 和 `Charlie`，他们的得分和罚时如下：
+
+		- Alice: 得分 300，罚时 10，评级 1500
+		- Bob: 得分 300，罚时 5，评级 1600
+		- Charlie: 得分 250，罚时 20，评级 1400
+
+		经过计算，`$standings` 数组可能会是这样的：
+
+		```php
+		$standings = [
+			[300, 5, ['Bob', 1600], 1],      // Bob: 得分 300, 罚时 5, 排名 1
+			[300, 10, ['Alice', 1500], 1],   // Alice: 得分 300, 罚时 10, 排名 1 (与 Bob 同分)
+			[250, 20, ['Charlie', 1400], 3]  // Charlie: 得分 250, 罚时 20, 排名 3
+		];
+		```
+
+		### 说明
+		- **总得分**：参赛者在比赛中获得的总分数。
+		- **总罚时**：参赛者在比赛中因提交错误或其他原因而产生的总罚时。
+		- **[用户名, 用户评级]**：一个数组，包含参赛者的用户名和其评级。
+		- **虚拟排名**：根据得分和罚时计算出的排名，可能会有相同的排名（例如，得分相同的参赛者）。
+	*/
 	$score = array();
 	$n_people = count($contest_data['people']);
 	$n_problems = count($contest_data['problems']);
@@ -205,7 +248,22 @@ function calcStandings($contest, $contest_data, &$score, &$standings, $update_co
 	// standings: rank => score, penalty, [username, user_rating], virtual_rank
 	$standings = array();
 	foreach ($contest_data['people'] as $person) {
-		$cur = array(0, 0, $person);
+
+		$usr = queryUser($person[0]);
+		//echo "usr: " . json_encode($usr) . "\n";
+		
+		// 添加学号、JID 和班级信息
+		
+		$sid = $usr['sid']; // 学号
+		$jh = $usr['jid']; // Jing号
+		$cla = $usr['class']; // 班级
+		$cur = array(0, 0, $person, $sid, $jh, $cla);
+		
+
+		/*$cur = array(0, 0, $person);*/
+		// debug: show $person
+		//echo "person: " . json_encode($person) . "\n";
+		//echo "cur: " . json_encode($cur) . "\n";
 		for ($i = 0; $i < $n_problems; $i++) {
 			if (isset($score[$person[0]][$i])) {
 				$cur_row = $score[$person[0]][$i];
@@ -215,29 +273,50 @@ function calcStandings($contest, $contest_data, &$score, &$standings, $update_co
 					DB::insert("insert into contests_submissions (contest_id, submitter, problem_id, submission_id, score, penalty) values ({$contest['id']}, '{$person[0]}', {$contest_data['problems'][$i]}, {$cur_row[2]}, {$cur_row[0]}, {$cur_row[1]})");
 				}
 			}
+			//echo "cur: " . json_encode($cur) . "\n";
 		}
+		
+		
+		
+		// debug: show $cur
+		//echo "cur: " . json_encode($cur) . "\n";
+		//echo "sid: " . json_encode($usr[$person[0]]['sid'];) . "\n";
+
 		$standings[] = $cur;
 	}
 
+	// 对 $standings 数组进行排序
 	usort($standings, function($lhs, $rhs) {
+		// 首先按总得分降序排序
 		if ($lhs[0] != $rhs[0]) {
-			return $rhs[0] - $lhs[0];
-		} elseif ($lhs[1] != $rhs[1]) {
-			return $lhs[1] - $rhs[1];
-		} else {
-			return strcmp($lhs[2][0], $rhs[2][0]);
+			return $rhs[0] - $lhs[0]; // 得分高的排在前面
+		} 
+		// 如果总得分相同，则按总罚时升序排序
+		elseif ($lhs[1] != $rhs[1]) {
+			return $lhs[1] - $rhs[1]; // 罚时少的排在前面
+		} 
+		// 如果总得分和总罚时都相同，则按用户名字母顺序排序
+		else {
+			return strcmp($lhs[2][0], $rhs[2][0]); // 按用户名的字母顺序排序
 		}
 	});
 
+	// echo "standings: " . json_encode($standings) . "\n";
+
+	// 定义一个函数，用于判断两个参赛者是否具有相同的排名
 	$is_same_rank = function($lhs, $rhs) {
-		return $lhs[0] == $rhs[0] && $lhs[1] == $rhs[1];
+		return $lhs[0] == $rhs[0] && $lhs[1] == $rhs[1]; // 比较总得分和总罚时
 	};
 
+	// 遍历每个参赛者以分配排名
 	for ($i = 0; $i < $n_people; $i++) {
+		// 如果是第一个参赛者，或者当前参赛者与前一个参赛者的排名不同
 		if ($i == 0 || !$is_same_rank($standings[$i - 1], $standings[$i])) {
-			$standings[$i][] = $i + 1;
+			$standings[$i][] = $i + 1; // 分配当前排名
 		} else {
-			$standings[$i][] = $standings[$i - 1][3];
+			// 如果当前参赛者与前一个参赛者排名相同，则共享前一个参赛者的排名
+			$standings[$i][] = $standings[$i - 1][6]; // 使用前一个参赛者的排名
 		}
 	}
+	//echo "standings: " . json_encode($standings) . "\n";
 }
