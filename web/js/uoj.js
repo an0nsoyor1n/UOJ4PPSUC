@@ -2,23 +2,48 @@
 uojLocaleData = {
 	"username": {
 		"en": "Username",
-		"zh-cn": "用户名"
+		"zh-cn": "用户名",
+		"fra": "Nom d'utilisateur",
+		"por": "Nome de utilizador",
+		"ger": "Benutzername",
+		"rus": "Имя пользователя",
+		'spa': 'Nombre de usuario',
 	},
 	'ID': {
 		"en": "ID",
-		"zh-cn": "学号"
+		"zh-cn": "学号",
+		"fra": "Identifiant",
+		"por": "Identificador",
+		"ger": "ID",
+		"rus": "Идентификатор",
+		'spa': 'ID',
 	},
 	'JID': {
-		"en": "JID",
-		"zh-cn": "名牌号(Jing 号)"
+		"en": "Name Badge Number",
+		"zh-cn": "名牌号(Jing 号)",
+		"fra": "JID",
+		"por": "JID",
+		"ger": "JID",
+		"rus": "JID",
+		'spa': 'JID',
 	},
 	'class': {
 		"en": "class",
-		"zh-cn": "班级"
+		"zh-cn": "班级",
+		"fra": "Classe",
+		"por": "Classe",
+		"ger": "Klasse",
+		"rus": "Класс",
+		'spa': 'Clase',
 	},
 	"contests::total score": {
 		"en": "Score",
-		"zh-cn": "总分"
+		"zh-cn": "总分",
+		"fra": "Score",
+		"por": "Score",
+		"ger": "Score",
+		"rus": "Score",
+		'spa': 'Score',
 	},
 	"contests::n participants": {
 		"en": function(n) {
@@ -26,35 +51,79 @@ uojLocaleData = {
 		},
 		"zh-cn": function(n) {
 			return "共 " + n + " 名参赛者";
-		}
+		},
+		"fra": function(n) {
+			return "Nombre de participants: " + n;
+		},
+		"por": function(n) {
+			return "Número de participantes: " + n;
+		},
+		"ger": function(n) {
+			return "Anzahl der Teilnehmer: " + n;
+		},
 	},
 	"click-zan::good": {
 		"en": "Good",
-		"zh-cn": "好评"
+		"zh-cn": "好评",
+		"fra": "Bon",
+		"por": "Bom",
+		"ger": "Gut",
+		"rus": "Хорошо",
+		'spa': 'Bueno',
 	},
 	"click-zan::bad": {
 		"en": "Bad",
-		"zh-cn": "差评"
+		"zh-cn": "差评",
+		"fra": "Mauvais",
+		"por": "Ruim",
+		"ger": "Schlecht",
+		"rus": "Плохо",
+		'spa': 'Malo',
 	},
 	"editor::use advanced editor": {
 		"en": "use advanced editor",
-		"zh-cn": "使用高级编辑器"
+		"zh-cn": "使用高级编辑器",
+		"fra": "Utiliser l'éditeur avancé",
+		"por": "Usar o editor avançado",
+		"ger": "Erweiterte Editor verwenden",
+		"rus": "Использовать расширенный редактор",
+		'spa': 'Usar editor avanzado',
 	},
 	"editor::language": {
 		"en": "Language",
-		"zh-cn": "语言"
+		"zh-cn": "语言",
+		"fra": "Langue",
+		"por": "Idioma",
+		"ger": "Sprache",
+		"rus": "Язык",
+		'spa': 'Idioma',
 	},
 	"editor::browse": {
 		"en": "Browse",
-		"zh-cn": "浏览"
+		"zh-cn": "浏览",
+		"fra": "Parcourir",
+		"por": "Navegar",
+		"ger": "Durchsuchen",
+		"rus": "Просмотр",
+		'spa': 'Navegar',
 	},
 	"editor::upload by editor": {
 		"en": "Upload by editor",
-		"zh-cn": "使用编辑器上传"
+		"zh-cn": "使用编辑器上传",
+		"fra": "Téléverser par l'éditeur",
+		"por": "Enviar por editor",
+		"ger": "Hochladen durch Editor",
+		"rus": "Загрузить через редактор",
+		'spa': 'Subir por editor',
 	},
 	"editor::upload from local": {
 		"en": "Upload from local",
-		"zh-cn": "从本地文件上传"
+		"zh-cn": "从本地文件上传",
+		"fra": "Téléverser depuis local",
+		"por": "Enviar do local",
+		"ger": "Hochladen von lokal",
+		"rus": "Загрузить из локального файла",
+		'spa': 'Subir desde local',
 	}
 };
 
