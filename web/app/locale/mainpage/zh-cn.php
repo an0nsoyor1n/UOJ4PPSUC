@@ -20,6 +20,8 @@ return [
 	'codeforces' => 'Codeforces',
 	'PKU JudgeOnline' => '北京大学在线评测系统',
 	'Luogu' => '洛谷',
+	'acwing' => 'ACWing',
+	'intro of acwing' => 'ACWing是一个在线编程学习平台，由2011年NOI金牌获得者，北京大学计算机系保送生闫学灿建立，提供各种编程语言的练习题和编程比赛。ACWing平台支持多种编程语言，包括C、C++、Python、Java等，并提供了丰富的比赛功能，如提交代码、查看结果、查看排名等。同时ACWing还提供了多种编程语言的教程，帮助编程爱好者提高编程技能和竞赛水平。',
 	'Virtual Judge' => 'Virtual Judge',
 	'welcome' => '欢迎来到' . $oj_name_short . ' !',
 	'welcome intro' => $oj_name_short . '(全称' . $oj_name . ')是一个在线编程练习平台，旨在帮助在校同学们提高编程技能水平，为以后的工作和科研打下坚实的计算机技术基础。',
@@ -29,4 +31,6 @@ return [
 	'welcome intro2' => $oj_name_short . '基于UOJ开发，支持包括中英文在内的7种语言，提供成熟的练习体验！',
 	'welcome intro3 title' => '包含多种课程练习',
 	'welcome intro3' => $oj_name_short . '包含多种课程的练习题。C语言，Python，数据结构相关的练习题这里都有，提交你的代码试试看！',
+	'oiwiki' => 'OI Wiki',
+	'intro of oiwiki' => 'OI Wiki 是一个面向竞赛选手的编程学习网站，提供各种编程语言的教程、题库、竞赛平台等资源，帮助选手提高编程技能和竞赛水平。',
 ];

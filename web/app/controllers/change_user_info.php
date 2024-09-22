@@ -174,7 +174,7 @@
 		//ok &= getFormErrorAndShowHelp('sid', validateSID);
 		//ok &= getFormErrorAndShowHelp('jid', validateJID);
 		//ok &= getFormErrorAndShowHelp('class', validateClass);
-		// 这里完全不需要写这种验证
+		// 这里完全不需要写这种验证，因为前端已经验证了
 		return ok;
 	}
 	function submitUpdatePost() {

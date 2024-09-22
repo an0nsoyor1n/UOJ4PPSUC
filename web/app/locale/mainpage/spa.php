@@ -28,6 +28,9 @@ return [
 	'welcome intro2 title' => 'Desarrollado en un Marco Maduro',
 	'welcome intro2' => $oj_name_short . ' está basado en UOJ y soporta 7 idiomas, incluyendo chino e inglés, proporcionando una experiencia de práctica madura!',
 	'welcome intro3 title' => 'Incluye Diversos Ejercicios de Curso',
-	'welcome intro3' => $oj_name_short . ' incluye problemas de práctica de varios cursos. Ya sea C, Python o estructuras de datos, encontrarás ejercicios aquí. ¡Envía tu código y pruébalo!'
-
+	'welcome intro3' => $oj_name_short . ' incluye problemas de práctica de varios cursos. Ya sea C, Python o estructuras de datos, encontrarás ejercicios aquí. ¡Envía tu código y pruébalo!',
+	'acwing' => 'ACWing',
+	'intro of acwing' => 'ACWing es una plataforma en línea de aprendizaje de programación creada por Yan Xuecan, un ganador de la medalla de oro en la Olimpiada Nacional de Informática de 2011, y estudiante de la Universidad de Pekín. ACWing ofrece una amplia gama de recursos de programación, incluyendo conjuntos de problemas, tutoriales y competiciones, ayudando a los entusiastas a mejorar sus habilidades de programación y su nivel competitivo.',
+	'oiwiki' => 'OI Wiki',
+	'intro of oiwiki' => 'OI Wiki 是一个面向竞赛选手的编程学习网站，提供各种编程语言的教程、题库、竞赛平台等资源，帮助选手提高编程技能和竞赛水平。',
 ];

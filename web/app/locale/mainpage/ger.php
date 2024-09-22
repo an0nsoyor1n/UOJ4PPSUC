@@ -28,6 +28,9 @@ return [
 	'welcome intro2 title' => 'Auf einem reifen Framework entwickelt',
 	'welcome intro2' => $oj_name_short . ' basiert auf UOJ und unterstützt 7 Sprachen, darunter Chinesisch und Englisch, und bietet eine ausgereifte Übungserfahrung!',
 	'welcome intro3 title' => 'Beinhaltet verschiedene Kursübungen',
-	'welcome intro3' => $oj_name_short . ' enthält Übungsaufgaben aus verschiedenen Kursen. Ob C-Sprache, Python oder Datenstrukturen, hier finden Sie Übungen. Reichen Sie Ihren Code ein und probieren Sie es aus!'
-
+	'welcome intro3' => $oj_name_short . ' enthält Übungsaufgaben aus verschiedenen Kursen. Ob C-Sprache, Python oder Datenstrukturen, hier finden Sie Übungen. Reichen Sie Ihren Code ein und probieren Sie es aus!',
+	'acwing' => 'ACWing',
+	'intro of acwing' => 'ACWing ist eine Online-Programmier-Lernplattform, die von Yan Xuecan, einem Goldmedaillenachweiser der Nationalen Informatik-Olympiade von 2011 und einem Studierenden der Peking-Universität, erstellt wurde. ACWing bietet eine Vielzahl von Programmierressourcen, darunter Problemsets, Tutorials und Wettbewerbe, die Enthusiasten helfen, ihre Programmierfähigkeiten und Wettbewerbsniveaus zu verbessern.',
+	'oiwiki' => 'OI Wiki',
+	'intro of oiwiki' => 'OI Wiki ist eine Website für das Programmieren, die für Teilnehmer von Programmierwettbewerben erstellt wurde. Es stellt Ressourcen für das Programmieren bereit, einschließlich Problemen, Tutorials und Wettbewerbsplattformen, die den Teilnehmern helfen, ihre Programmierfähigkeiten und Wettbewerbsniveaus zu verbessern.',
 ];

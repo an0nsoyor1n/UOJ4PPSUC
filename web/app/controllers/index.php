@@ -119,6 +119,7 @@
       <li data-target="#carouselExampleCaptions" data-slide-to="4"></li>
       <li data-target="#carouselExampleCaptions" data-slide-to="5"></li>
       <li data-target="#carouselExampleCaptions" data-slide-to="6"></li>
+      <li data-target="#carouselExampleCaptions" data-slide-to="7"></li>
     </ol>
     <div class="carousel-inner">
 		<!-- 蓝桥 -->
@@ -249,7 +250,52 @@
 					linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
 			'></div>
 		</div>
-    </div>
+ 
+		<!-- ACWing -->
+		<div class="carousel-item">
+				<img src="/images/acwing.jpeg" class="d-block" alt="..." style='height: 400px; margin: 0 auto; position: relative;'>
+				<div class="carousel-caption d-none d-md-block">
+					<h5 style='color: black; padding: 5px;'><?= UOJLocale::get('mainpage::Programming Competition Platform') ?>:<?= UOJLocale::get('mainpage::acwing') ?></h5>
+					<p style='color: black; padding: 5px;'><?= UOJLocale::get('mainpage::intro of acwing') ?></p>
+					<button type="button" class="btn btn-primary" onclick="location.href='https://www.acwing.com/'"><?= UOJLocale::get('mainpage::detail') ?></button>
+				</div>
+				<!-- 添加渐变层 -->
+				<div style='
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					background:
+						linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.7) 30%, rgba(255, 255, 255, 0.4) 60%, rgba(255, 255, 255, 0.1) 70%, rgba(255, 255, 255, 0) 80%),
+						linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+				'></div>
+			</div>
+		
+
+		<!-- oiwiki -->
+		<div class="carousel-item">
+			<img src="/images/oiwiki.jpeg" class="d-block" alt="..." style='height: 400px; width: 900px; margin: 0 auto; position: relative;'>
+			<div class="carousel-caption d-none d-md-block">
+				<h5 style='color: black; padding: 5px;'><?= UOJLocale::get('mainpage::Programming Competition Platform') ?>:<?= UOJLocale::get('mainpage::oiwiki') ?></h5>
+				<p style='color: black; padding: 5px;'><?= UOJLocale::get('mainpage::intro of oiwiki') ?></p>
+				<button type="button" class="btn btn-primary" onclick="location.href='https://oi-wiki.org/'"><?= UOJLocale::get('mainpage::detail') ?></button>
+			</div>
+			<!-- 添加渐变层 -->
+			<div style='
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background:
+					linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.7) 30%, rgba(255, 255, 255, 0.4) 60%, rgba(255, 255, 255, 0.1) 70%, rgba(255, 255, 255, 0) 80%),
+					linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 100%);
+			'></div>
+		</div>
+
+
+	</div>
 
    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev" style="color: #000000;">
 	  <span class="carousel-control-prev-icon" aria-hidden="true"></span>

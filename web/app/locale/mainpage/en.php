@@ -28,6 +28,9 @@ return [
 	'welcome intro2 title' => 'Developed on a Mature Framework',
 	'welcome intro2' => $oj_name_short . ' is based on UOJ and supports 7 languages including Chinese and English, providing a mature practice experience!',
 	'welcome intro3 title' => 'Includes Various Course Exercises',
-	'welcome intro3' => $oj_name_short . ' includes practice problems from various courses. Whether it\'s C language, Python, or data structures, you can find exercises here. Submit your code and give it a try!'
-
+	'welcome intro3' => $oj_name_short . ' includes practice problems from various courses. Whether it\'s C language, Python, or data structures, you can find exercises here. Submit your code and give it a try!',
+	'acwing' => 'ACWing',
+	'intro of acwing' => 'ACWing is an online programming learning platform created by Yan Xuecan, a gold medalist in the 2011 National Informatics Olympiad, and a student of Peking University. ACWing offers a wide range of programming resources, including problem sets, tutorials, and competitions, helping enthusiasts improve their programming skills and competition levels.',
+	'oiwiki' => 'OI Wiki',
+	'intro of oiwiki' => 'OI Wiki is a website for programming learning, created for participants in programming competitions. It provides programming resources, including problems, tutorials, and competition platforms, helping participants improve their programming skills and competition levels.',
 ];
