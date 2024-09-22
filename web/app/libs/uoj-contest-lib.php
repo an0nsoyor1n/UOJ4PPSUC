@@ -8,11 +8,11 @@ define("CONTEST_FINISHED", 20);
 function calcRating($standings, $K = 400) {
 	$DELTA = 500;
 
-	$n = count($standings);
+	$n = count($standings); // 参赛者数量
 	
 	$rating = array();
 	for ($i = 0; $i < $n; ++$i) {
-		$rating[$i] = $standings[$i][2][1];
+		$rating[$i] = $standings[$i][2][1]; // 获取每个参赛者的初始评级
 	}
 	
 	$rank = array();
@@ -20,25 +20,25 @@ function calcRating($standings, $K = 400) {
 	for ($i = 0; $i < $n; ) {
 		$j = $i;
 		while ($j + 1 < $n && $standings[$j + 1][3] == $standings[$j][3]) {
-			++$j;
+			++$j; // 找到排名相同的参赛者
 		}
-		$our_rk = 0.5 * (($i + 1) + ($j + 1));
+		$our_rk = 0.5 * (($i + 1) + ($j + 1)); // 计算平均排名
 		while ($i <= $j) {
 			$rank[$i] = $our_rk;
-			$foot[$i] = $n - $rank[$i];
+			$foot[$i] = $n - $rank[$i]; // 计算foot值
 			$i++;
 		}
 	}
 	
 	$weight = array();
 	for ($i = 0; $i < $n; ++$i) {
-		$weight[$i] = pow(7, $rating[$i] / $DELTA);
+		$weight[$i] = pow(7, $rating[$i] / $DELTA); // 计算每个参赛者的权重
 	}
 	$exp = array_fill(0, $n, 0);
 	for ($i = 0; $i < $n; ++$i) {
 		for ($j = 0; $j < $n; ++$j) {
 			if ($j != $i) {
-				$exp[$i] += $weight[$i] / ($weight[$i] + $weight[$j]);
+				$exp[$i] += $weight[$i] / ($weight[$i] + $weight[$j]); // 计算期望值
 			}
 		}
 	}
@@ -46,7 +46,7 @@ function calcRating($standings, $K = 400) {
 	$new_rating = array();
 	for ($i = 0; $i < $n; $i++) {
 		$new_rating[$i] = $rating[$i];
-		$new_rating[$i] += ceil($K * ($foot[$i] - $exp[$i]) / ($n - 1));
+		$new_rating[$i] += ceil($K * ($foot[$i] - $exp[$i]) / ($n - 1)); // 计算新的评级
 	}
 	
 	for ($i = $n - 1; $i >= 0; $i--) {
@@ -54,17 +54,17 @@ function calcRating($standings, $K = 400) {
 			break;
 		}
 		if ($new_rating[$i] > $rating[$i]) {
-			$new_rating[$i] = $rating[$i];
+			$new_rating[$i] = $rating[$i]; // 确保新的评级不会超过初始评级
 		}
 	}
 	
 	for ($i = 0; $i < $n; $i++) {
 		if ($new_rating[$i] < 0) {
-			$new_rating[$i] = 0;
+			$new_rating[$i] = 0; // 确保新的评级不会低于0
 		}
 	}
 	
-	return $new_rating;
+	return $new_rating; // 返回新的评级
 }
 
 function calcRatingSelfTest() {
