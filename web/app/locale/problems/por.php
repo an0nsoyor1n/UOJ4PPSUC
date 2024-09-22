@@ -43,5 +43,7 @@ return [
     'submission id' => 'ID do registro de submissão',
     'my submissions' => 'Minhas submissões',
     'hacks by me' => 'Meus hacks',
-    'hacks to me' => 'Meus hacks recebidos'
+    'hacks to me' => 'Meus hacks recebidos',
+    'basic grammar' => 'Gramática básica',
+    'data structure' => 'Estrutura de dados',
 ];

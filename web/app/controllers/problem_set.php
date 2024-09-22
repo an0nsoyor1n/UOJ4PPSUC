@@ -65,6 +65,12 @@ EOD;
 	if ($cur_tab == 'template') {
 		$search_tag = "模板题";
 	}
+	if ($cur_tab == 'basic_grammar') {
+		$search_tag = "基础语法";
+	}
+	if ($cur_tab == 'data_structure') {
+		$search_tag = "数据结构";
+	}
 	if (isset($_GET['tag'])) {
 		$search_tag = $_GET['tag'];
 	}
@@ -100,6 +106,14 @@ EOD;
 		'template' => array(
 			'name' => UOJLocale::get('problems::template problems'),
 			'url' => "/problems/template"
+		),
+		'basic_grammar' => array(
+			'name' => UOJLocale::get('problems::basic grammar'),
+			'url' => "/problems/basic_grammar"
+		),
+		'data_structure' => array(
+			'name' => UOJLocale::get('problems::data structure'),
+			'url' => "/problems/data_structure"
 		)
 	);
 	
@@ -137,51 +151,51 @@ EOD;
 <div class='shadow-lg rounded' style='padding: 20px;'>
 	<div class="row">
 		<div class="col-sm-4">
-			<?= HTML::tablist($tabs_info, $cur_tab, 'nav-pills') ?>
+			<?= HTML::tablist($tabs_info, $cur_tab, 'nav-pills') ?> <!-- 显示标签列表 -->
 		</div>
 		<div class="col-sm-4 order-sm-9 checkbox text-right">
-			<label class="checkbox-inline" for="input-show_tags_mode"><input type="checkbox" id="input-show_tags_mode" <?= isset($_COOKIE['show_tags_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show tags') ?></label>
-			<label class="checkbox-inline" for="input-show_submit_mode"><input type="checkbox" id="input-show_submit_mode" <?= isset($_COOKIE['show_submit_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show statistics') ?></label>
+			<label class="checkbox-inline" for="input-show_tags_mode"><input type="checkbox" id="input-show_tags_mode" <?= isset($_COOKIE['show_tags_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show tags') ?></label> <!-- 显示标签的复选框 -->
+			<label class="checkbox-inline" for="input-show_submit_mode"><input type="checkbox" id="input-show_submit_mode" <?= isset($_COOKIE['show_submit_mode']) ? 'checked="checked" ': ''?>/> <?= UOJLocale::get('problems::show statistics') ?></label> <!-- 显示统计信息的复选框 -->
 		</div>
 		<div class="col-sm-4 order-sm-5">
-		<?php echo $pag->pagination(); ?>
+		<?php echo $pag->pagination(); ?> <!-- 显示分页 -->
 		</div>
 	</div>
 
 	<div class="top-buffer-sm"></div>
 
 	<script type="text/javascript">
-	$('#input-show_tags_mode').click(function() {
+	$('#input-show_tags_mode').click(function() { // 标签模式复选框点击事件
 		if (this.checked) {
-			$.cookie('show_tags_mode', '', {path: '/problems'});
+			$.cookie('show_tags_mode', '', {path: '/problems'}); // 设置cookie以显示标签
 		} else {
-			$.removeCookie('show_tags_mode', {path: '/problems'});
+			$.removeCookie('show_tags_mode', {path: '/problems'}); // 移除cookie以隐藏标签
 		}
-		location.reload();
+		location.reload(); // 刷新页面
 	});
-	$('#input-show_submit_mode').click(function() {
+	$('#input-show_submit_mode').click(function() { // 提交模式复选框点击事件
 		if (this.checked) {
-			$.cookie('show_submit_mode', '', {path: '/problems'});
+			$.cookie('show_submit_mode', '', {path: '/problems'}); // 设置cookie以显示统计
 		} else {
-			$.removeCookie('show_submit_mode', {path: '/problems'});
+			$.removeCookie('show_submit_mode', {path: '/problems'}); // 移除cookie以隐藏统计
 		}
-		location.reload();
+		location.reload(); // 刷新页面
 	});
 	</script>
 	<?php
-		echo '<div class="', join($div_classes, ' '), '">';
-		echo '<table class="', join($table_classes, ' '), '">';
+		echo '<div class="', join($div_classes, ' '), '">'; // 创建表格容器
+		echo '<table class="', join($table_classes, ' '), '">'; // 创建表格
 		echo '<thead>';
-		echo $header;
+		echo $header; // 输出表头
 		echo '</thead>';
 		echo '<tbody>';
 
-		foreach ($pag->get() as $idx => $row) {
-			echoProblem($row);
+		foreach ($pag->get() as $idx => $row) { // 遍历分页数据
+			echoProblem($row); // 输出每个问题
 			echo "\n";
 		}
 		if ($pag->isEmpty()) {
-			echo '<tr><td class="text-center" colspan="233">'.UOJLocale::get('none').'</td></tr>';
+			echo '<tr><td class="text-center" colspan="233">'.UOJLocale::get('none').'</td></tr>'; // 如果没有数据，显示无内容提示
 		}
 
 		echo '</tbody>';
@@ -189,10 +203,10 @@ EOD;
 		echo '</div>';
 
 		if (isSuperUser($myUser)) {
-			$new_problem_form->printHTML();
+			$new_problem_form->printHTML(); // 如果是超级用户，显示新问题表单
 		}
 
-		echo $pag->pagination();
+		echo $pag->pagination(); // 输出分页
 	?>
 </div>
 <?php echoUOJPageFooter() ?>

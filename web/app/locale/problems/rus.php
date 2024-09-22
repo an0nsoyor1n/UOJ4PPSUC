@@ -43,7 +43,9 @@ return [
 	'submission id' => 'ID отправки',
 	'my submissions' => 'Мои отправки',
 	'hacks by me' => 'Мои хаки',
-	'hacks to me' => 'Хаки в мой адрес'
+	'hacks to me' => 'Хаки в мой адрес',
+	'basic grammar' => 'Основная грамматика',
+	'data structure' => 'Структуры данных',
 ];
 
 

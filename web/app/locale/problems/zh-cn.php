@@ -2,7 +2,7 @@
 return [
 	'problem' => '题目',
 	'all problems' => '总题库',
-	'template problems' => '模板题库',
+	'template problems' => '模板题',
 	'add new' => '添加新题',
 	'ac' => 'AC',
 	'submit' => '提交',
@@ -43,5 +43,7 @@ return [
 	'submission id' => '提交记录ID',
 	'my submissions' => '我的提交记录',
 	'hacks by me' => '我的Hack记录',
-	'hacks to me' => '我的被Hack记录'
+	'hacks to me' => '我的被Hack记录',
+	'basic grammar' => '基础语法',
+	'data structure' => '数据结构',
 ];

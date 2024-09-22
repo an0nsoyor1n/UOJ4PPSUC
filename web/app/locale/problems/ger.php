@@ -43,5 +43,7 @@ return [
     'submission id' => 'Einreichungs-ID',
     'my submissions' => 'Meine Einreichungen',
     'hacks by me' => 'Meine Hacks',
-    'hacks to me' => 'Meine gehackten Einreichungen'
+    'hacks to me' => 'Meine gehackten Einreichungen',
+    'basic grammar' => 'Grundlagen der Grammatik',
+    'data structure' => 'Datenstrukturen',
 ];
