@@ -1,0 +1,108 @@
+# 定义Docker Compose文件的版本
+version: '3'
+
+# 定义服务集合
+services:
+
+    # 数据库服务
+    uoj-db:
+        # 使用的镜像及其标签
+        image: ghcr.io/universaloj/uoj-db:latest
+        # 构建镜像的上下文目录和Dockerfile路径
+        build:
+            context: ./db/
+            dockerfile: Dockerfile
+        # 容器名称
+        container_name: uoj-db
+        # 容器重启策略为总是重启
+        restart: always
+        # 数据卷，将宿主机的目录挂载到容器的目录上
+        volumes:
+            - ./uoj_data/db/mysql:/var/lib/mysql
+            - ./db:/opt/uoj_db
+            - ./db/init.sql:/docker-entrypoint-initdb.d/003-init.sql
+        # 环境变量配置
+        environment:
+            - MYSQL_DATABASE=app_uoj233
+            - MYSQL_ROOT_PASSWORD=root
+
+    # 判定器服务
+    uoj-judger:
+        # 使用的镜像及其标签
+        image: ghcr.io/universaloj/uoj-judger:latest
+        # 构建镜像的上下文目录和Dockerfile路径
+        build:
+            context: ./judger/
+            dockerfile: Dockerfile
+        # 容器名称
+        container_name: uoj-judger
+        # 容器重启策略为总是重启
+        restart: always
+        # 打开标准输入
+        stdin_open: true
+        # 使用TTY模式
+        tty: true
+        # 添加的内核能力
+        cap_add:
+            - SYS_PTRACE
+        # 数据卷，将宿主机的目录挂载到容器的目录上
+        volumes:
+            - ./uoj_data/judger/log:/opt/uoj_judger/log
+        # 环境变量配置
+        environment:
+            - UOJ_PROTOCOL=http
+            - UOJ_HOST=uoj-web
+            - JUDGER_NAME=compose_judger
+            - JUDGER_PASSWORD=_judger_password_
+            - SOCKET_PORT=2333
+            - SOCKET_PASSWORD=_judger_socket_password_
+
+    # Web服务
+    uoj-web:
+        # 使用的镜像及其标签
+        image: ghcr.io/universaloj/uoj-web:latest
+        # 构建镜像的上下文目录和Dockerfile路径
+        build:
+            context: ./
+            dockerfile: web/Dockerfile
+        # 容器名称
+        container_name: uoj-web
+        # 容器重启策略为总是重启
+        restart: always
+        # 打开标准输入
+        stdin_open: true
+        # 使用TTY模式
+        tty: true
+        # 添加的内核能力
+        cap_add:
+            - SYS_PTRACE
+        # 服务依赖，确保在uoj-db和uoj-judger服务启动后启动
+        depends_on:
+            - uoj-db
+            - uoj-judger
+        # 数据卷，将宿主机的目录挂载到容器的目录上
+        volumes:
+            - ./uoj_data/web/data:/var/uoj_data
+            - ./web:/opt/uoj/web
+            # - ./uoj_data/web/data:/var/uoj_data
+            # - ./uoj_data/web/storage:/opt/uoj/web/app/storage
+            # 绑定挂载，用于配置文件
+            -   type: bind
+                source: ./.config.local.php
+                target: /opt/uoj/web/app/.config.php
+        # 端口映射，将宿主机的端口映射到容器的端口上
+        ports:
+            - "8081:80"
+            - "3690:3690"
+        # 环境变量配置
+        environment:
+            - DATABASE_HOST=uoj-db
+            - DATABASE_PASSWORD=root
+            - JUDGER_SOCKET_PORT=2333
+            - JUDGER_SOCKET_PASSWORD=_judger_socket_password_
+            - SALT_0=_salt_0_
+            - SALT_1=_salt_1_
+            - SALT_2=_salt_2_
+            - SALT_3=_salt_3_
+            - UOJ_PROTOCOL=http
+
