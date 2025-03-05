@@ -44,7 +44,6 @@ SET @sql = IF(@column_exists = 0,
 
 PREPARE stmt FROM @sql;
 EXECUTE stmt;
-<<<<<<< HEAD
 DEALLOCATE PREPARE stmt;
 
 -- 题单表
@@ -71,6 +70,3 @@ CREATE TABLE IF NOT EXISTS `problem_list_problems` (
   FOREIGN KEY (`list_id`) REFERENCES `problem_lists` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`problem_id`) REFERENCES `problems` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-=======
-DEALLOCATE PREPARE stmt;
->>>>>>> 42ae0f63f5caf925a774fa514ed3986208510af4

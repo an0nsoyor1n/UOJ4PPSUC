@@ -21,15 +21,12 @@ Route::group([
 		Route::any('/problem/{id}/manage/managers', '/problem_managers_manage.php');
 		Route::any('/problem/{id}/manage/data', '/problem_data_manage.php');
 		
-<<<<<<< HEAD
 		Route::any('/problems/problem_lists', '/problem_lists.php'); //题单列表
 		Route::any('/problems/problem_lists/{id}', '/problem_list.php'); //展示具体题单
 		Route::any('/problems/problem_lists/{id}/edit', '/problem_list_edit.php'); //编辑题单
 		
 		
 		
-=======
->>>>>>> 42ae0f63f5caf925a774fa514ed3986208510af4
 		Route::any('/contests', '/contests.php');
 		Route::any('/contest/new', '/add_contest.php');
 		Route::any('/contest/{id}', '/contest_inside.php');
