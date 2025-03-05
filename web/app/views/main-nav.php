@@ -6,6 +6,7 @@
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
 		<ul class="nav navbar-nav mr-auto">
 			<li class="nav-item"><a class="nav-link" href="<?= HTML::url('/contests') ?>"><span class="glyphicon glyphicon-stats"></span> <?= UOJLocale::get('contests') ?></a></li>
+<<<<<<< HEAD
 			<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="nav-problems" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<span class="glyphicon glyphicon-list-alt"></span>
@@ -17,6 +18,9 @@
 					<a class="dropdown-item" href="<?= HTML::url('/problems/my') ?>"><?= UOJLocale::get('my problems') ?></a>
 				</div>
 			</li>
+=======
+			<li class="nav-item"><a class="nav-link" href="<?= HTML::url('/problems') ?>"><span class="glyphicon glyphicon-list-alt"></span> <?= UOJLocale::get('problems') ?></a></li>
+>>>>>>> 42ae0f63f5caf925a774fa514ed3986208510af4
 			<li class="nav-item"><a class="nav-link" href="<?= HTML::url('/submissions') ?>"><span class="glyphicon glyphicon-tasks"></span> <?= UOJLocale::get('submissions') ?></a></li>
 			<li class="nav-item"><a class="nav-link" href="<?= HTML::url('/hacks') ?>"><span class="glyphicon glyphicon-flag"></span> <?= UOJLocale::get('hacks') ?></a></li>
 			<li class="nav-item"><a class="nav-link" href="<?= HTML::blog_list_url() ?>"><span class="glyphicon glyphicon-edit"></span> <?= UOJLocale::get('blogs') ?></a></li>

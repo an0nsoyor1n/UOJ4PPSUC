@@ -2,9 +2,15 @@
 return [
 	'profile' => [
 		'oj-name' => 'PPSUC Online Judge',
+<<<<<<< HEAD
 		'oj-name-short' => 'PPSUC OJ',
 		'administrator' => 'CyberSWAT TEAM',
 		'admin-email' => 'CyberSWAT@ppsuc.cn',
+=======
+		'oj-name-short' => 'PPSUCOJ',
+		'administrator' => 'root',
+		'admin-email' => 'Andrew82106@local_uoj.ac',
+>>>>>>> 42ae0f63f5caf925a774fa514ed3986208510af4
 		'QQ-group' => '',
 		'ICP-license' => ''
 	],
@@ -29,10 +35,17 @@ return [
 	],
 	'security' => [
 		'user' => [
+<<<<<<< HEAD
 			'client_salt' => 'Qohidh9aUO7IW0xLjdJFeQes3f58f1fj'
 		],
 		'cookie' => [
 			'checksum_salt' => ['O0TRSxiRkfevRcER', 'nrrjeG95ffnfIZ4z', 'TIcSkjssLlkJT19v']
+=======
+			'client_salt' => 'salt0'
+		],
+		'cookie' => [
+			'checksum_salt' => ['salt1', 'salt2', 'salt3']
+>>>>>>> 42ae0f63f5caf925a774fa514ed3986208510af4
 		],
 	],
 	'mail' => [
