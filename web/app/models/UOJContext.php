@@ -66,7 +66,11 @@ class UOJContext {
 		if ($domain === null) {
 			$domain = UOJConfig::$data['web']['main']['host'];
 		}
-		$domain = array_shift(explode(':', $domain));
+		
+		$domain_str = $domain;  // 创建中间变量
+		$parts = explode(':', $domain_str);
+		$domain = $parts[0];
+		
 		if (validateIP($domain) || $domain === 'localhost') {
 			$domain = '';
 		} else {
@@ -76,10 +80,20 @@ class UOJContext {
 	}
 	
 	public static function setupBlog() {
-		$username = blog_name_decode($_GET['blog_username']);
-		if (!validateUsername($username) || !(self::$data['user'] = queryUser($username))) {
+		global $uojMySQL;
+		
+		if (!isset($_GET['blog_username'])) {
 			become404Page();
 		}
+		
+		$user = DB::selectFirst("select * from users where username = '".DB::escape($_GET['blog_username'])."'");
+		
+		if ($user == null) {
+			become404Page();
+		}
+		
+		self::$data['user'] = $user;
+		
 		if ($_GET['blog_username'] !== blog_name_encode(self::$data['user']['username'])) {
 			permanentlyRedirectTo(HTML::blog_url(self::$data['user']['username'], '/'));
 		}
@@ -95,7 +109,7 @@ class UOJContext {
 					case 'userid':
 						return self::$data['user']['username'];
 					case 'hasBlogPermission':
-						return Auth::check() && (isSuperUser(Auth::user()) || Auth::id() == self::$data['user']['username']);
+						return self::isAny() && self::user()['username'] === $_GET['blog_username'];
 					case 'isHis':
 						if (!isset($args[0])) {
 							return false;
@@ -107,7 +121,9 @@ class UOJContext {
 							return false;
 						}
 						$blog = $args[0];
-						return $blog['poster'] == self::$data['user']['username'] && $blog['type'] == 'B' && $blog['is_draft'] == false;
+						return $blog['poster'] == self::$data['user']['username'] && 
+							   ($blog['type'] == 'B' || $blog['type'] == 'S') && 
+							   $blog['is_draft'] == false;
 					case 'isHisSlide':
 						if (!isset($args[0])) {
 							return false;
@@ -117,5 +133,66 @@ class UOJContext {
 				}
 				break;
 		}
+	}
+	
+	function queryBlog($id) {
+		if (!$id) {
+			error_log("queryBlog: ID is empty");
+			return null;
+		}
+		
+		// 1. 先检查博客是否存在
+		$blog = DB::selectFirst("select * from blogs where id = " . (int)$id);
+		if (!$blog) {
+			error_log("queryBlog: No blog found with ID {$id}");
+			return null;
+		}
+		
+		// 2. 获取作者信息（使用正确的表名和字符集）
+		$poster = DB::selectFirst("select username from users where username = '" . DB::escape($blog['poster']) . "' COLLATE utf8mb4_unicode_ci");
+		if ($poster) {
+			$blog['poster_username'] = $poster['username'];
+		} else {
+			$blog['poster_username'] = $blog['poster'];
+		}
+		
+		error_log("queryBlog success: found blog with title " . ($blog['title'] ?? 'untitled'));
+		return $blog;
+	}
+	
+	function queryBlogTags($id) {
+		$tags = array();
+		$result = DB::select("select tag from blogs_tags where blog_id = " . (int)$id);
+		while ($row = DB::fetch($result)) {
+			$tags[] = $row['tag'];
+		}
+		return $tags;
+	}
+	
+	function checkBlogTableStructure() {
+		error_log("Checking blogs table structure...");
+		$result = DB::query("SHOW TABLES LIKE 'blogs'");
+		if (DB::num_rows($result) === 0) {
+			error_log("blogs table does not exist!");
+			return false;
+		}
+		
+		$result = DB::query("SHOW COLUMNS FROM blogs");
+		if ($result === false) {
+			error_log("Failed to get blogs table structure: " . DB::error());
+			return false;
+		}
+		
+		$columns = array();
+		while ($row = DB::fetch($result)) {
+			$columns[] = $row['Field'];
+		}
+		
+		error_log("blogs table columns: " . implode(", ", $columns));
+		return true;
+	}
+	
+	function __construct() {
+		checkBlogTableStructure();
 	}
 }

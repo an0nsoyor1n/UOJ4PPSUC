@@ -70,3 +70,11 @@ CREATE TABLE IF NOT EXISTS `problem_list_problems` (
   FOREIGN KEY (`list_id`) REFERENCES `problem_lists` (`id`) ON DELETE CASCADE,
   FOREIGN KEY (`problem_id`) REFERENCES `problems` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS blog_problems (
+    blog_id INT NOT NULL,
+    problem_id INT NOT NULL,
+    PRIMARY KEY (blog_id, problem_id),
+    FOREIGN KEY (blog_id) REFERENCES blogs(id) ON DELETE CASCADE,
+    FOREIGN KEY (problem_id) REFERENCES problems(id) ON DELETE CASCADE
+);

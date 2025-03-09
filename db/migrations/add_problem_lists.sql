@@ -7,6 +7,7 @@ START TRANSACTION;
 
 -- 先检查并删除已存在的表（如果需要重新创建）
 DROP TABLE IF EXISTS `problem_list_problems`;
+DROP TABLE IF EXISTS `problem_list_registrants`;
 DROP TABLE IF EXISTS `problem_lists`;
 
 -- 题单表
@@ -34,6 +35,15 @@ CREATE TABLE IF NOT EXISTS `problem_list_problems` (
   KEY `list_id` (`list_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
+-- 题单报名表
+CREATE TABLE IF NOT EXISTS `problem_list_registrants` (
+  `list_id` int(11) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `register_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`list_id`, `username`),
+  KEY `username` (`username`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
 -- 添加外键约束（如果需要的话）
 -- ALTER TABLE `problem_list_problems` 
 --   ADD CONSTRAINT `fk_list_id` FOREIGN KEY (`list_id`) REFERENCES `problem_lists` (`id`) ON DELETE CASCADE,
@@ -41,6 +51,7 @@ CREATE TABLE IF NOT EXISTS `problem_list_problems` (
 
 -- 如果需要删除表的SQL（用于回滚）
 -- DROP TABLE IF EXISTS `problem_list_problems`;
+-- DROP TABLE IF EXISTS `problem_list_registrants`;
 -- DROP TABLE IF EXISTS `problem_lists`;
 
 -- 提交事务

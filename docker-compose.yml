@@ -84,9 +84,6 @@ services:
         volumes:
             - ./uoj_data/web/data:/var/uoj_data
             - ./web:/opt/uoj/web
-            # - ./uoj_data/web/data:/var/uoj_data
-            # - ./uoj_data/web/storage:/opt/uoj/web/app/storage
-            # 绑定挂载，用于配置文件
             -   type: bind
                 source: ./.config.local.php
                 target: /opt/uoj/web/app/.config.php

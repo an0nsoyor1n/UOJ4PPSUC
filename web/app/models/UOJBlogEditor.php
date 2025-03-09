@@ -20,6 +20,8 @@ class UOJBlogEditor {
 	
 	public $validator = array();
 	
+	private $form_fields = array();
+	
 	function __construct() {
 		global $REQUIRE_LIB;
 		$REQUIRE_LIB['blog-editor'] = '';
@@ -56,10 +58,10 @@ class UOJBlogEditor {
 						continue;
 					}
 					if (strlen($tag) > 30) {
-						return '标签 “' . HTML::escape($tag) .'” 太长';
+						return '标签 "' . HTML::escape($tag) .'" 太长';
 					}
 					if (in_array($tag, $tags, true)) {
-						return '标签 “' . HTML::escape($tag) .'” 重复出现';
+						return '标签 "' . HTML::escape($tag) .'" 重复出现';
 					}
 					$tags[] = $tag;
 				}
@@ -227,7 +229,78 @@ EOD
 			$this->handleSave();
 		}
 	}
+	
+	public function addSelect($name, $options, $label, $default = null) {
+		$this->form_fields[] = array(
+			'type' => 'select',
+			'name' => $name,
+			'options' => $options,
+			'label' => $label,
+			'default' => $default
+		);
+	}
+	
 	public function printHTML() {
-		uojIncludeView('blog-editor', array('editor' => $this));
+		global $REQUIRE_LIB;
+		
+		$REQUIRE_LIB['blog-editor'] = '';
+?>
+		<form id="form-<?= $this->name ?>" class="form-horizontal" method="post">
+			<div class="form-group">
+				<label for="input-title" class="col-sm-2 control-label">标题</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="input-title" name="title" value="<?= HTML::escape($this->cur_data['title']) ?>" required>
+				</div>
+			</div>
+			
+			<?php foreach ($this->form_fields as $field): ?>
+				<?php if ($field['type'] === 'select'): ?>
+					<div class="form-group">
+						<label class="col-sm-2 control-label"><?= $field['label'] ?></label>
+						<div class="col-sm-10">
+							<select class="form-control" name="<?= $field['name'] ?>">
+								<?php foreach ($field['options'] as $value => $text): ?>
+									<option value="<?= $value ?>" <?= (($this->cur_data[$field['name']] ?? $field['default']) === $value ? 'selected' : '') ?>>
+										<?= $text ?>
+									</option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+				<?php endif; ?>
+			<?php endforeach; ?>
+			
+			<div class="form-group">
+				<label for="input-content" class="col-sm-2 control-label">内容</label>
+				<div class="col-sm-10">
+					<textarea class="form-control" id="input-content" name="content_md" data-content="<?= HTML::escape($this->cur_data['content_md']) ?>" rows="15"></textarea>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<label for="input-tags" class="col-sm-2 control-label">标签</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="input-tags" name="tags" value="<?= HTML::escape(join(', ', $this->cur_data['tags'])) ?>">
+					<span class="help-block">用逗号分隔</span>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" name="is_hidden" <?= $this->cur_data['is_hidden'] ? 'checked' : '' ?>>不公开
+						</label>
+					</div>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+					<button type="submit" id="button-submit" class="btn btn-default">发表</button>
+				</div>
+			</div>
+		</form>
+<?php
 	}
 }

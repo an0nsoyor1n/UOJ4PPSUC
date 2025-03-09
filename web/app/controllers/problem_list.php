@@ -28,6 +28,21 @@ $problems = DB::selectAll("SELECT p.*, plp.order_num
                           WHERE plp.list_id = {$list_id} 
                           ORDER BY plp.order_num");
 
+// 在获取题单信息后添加
+if (Auth::check()) {
+  $has_registered = DB::selectFirst("SELECT * FROM problem_list_registrants 
+                                   WHERE list_id = {$list_id} AND username = '".Auth::id()."'");
+} else {
+  $has_registered = false;
+}
+
+// 处理报名请求
+if (isset($_POST['register']) && Auth::check()) {
+  DB::insert("INSERT INTO problem_list_registrants (list_id, username) 
+             VALUES ({$list_id}, '".Auth::id()."')");
+  $has_registered = true;
+}
+
 ?>
 
 <?php echoUOJPageHeader($problem_list['name']) ?>
@@ -96,5 +111,22 @@ $problems = DB::selectAll("SELECT p.*, plp.order_num
         </div>
     </div>
 </div>
+
+<?php if (isSuperUser($myUser)) {
+    echo '<div class="float-right">';
+    echo '<a href="/problems/problem_lists/'.$problem_list['id'].'/export?type=count" class="btn btn-primary">按完成数量导出</a> ';
+    echo '<a href="/problems/problem_lists/'.$problem_list['id'].'/export?type=class" class="btn btn-primary">按班级导出</a> ';
+    echo '<a href="/problem_list_download.php?problem_list_id='.$problem_list['id'].'&type=count" class="btn btn-success"><i class="fas fa-download"></i> 下载CSV(按完成数)</a> ';
+    echo '<a href="/problem_list_download.php?problem_list_id='.$problem_list['id'].'&type=class" class="btn btn-success"><i class="fas fa-download"></i> 下载CSV(按班级)</a>';
+    echo '</div>';
+} ?>
+
+<?php if (Auth::check() && !$has_registered) {
+  echo <<<EOD
+    <form method="post">
+      <button type="submit" name="register" class="btn btn-primary">加入题单</button>
+    </form>
+  EOD;
+} ?>
 
 <?php echoUOJPageFooter() ?> 

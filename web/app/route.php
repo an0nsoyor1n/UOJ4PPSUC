@@ -6,6 +6,7 @@ Route::pattern('contest_id', '[1-9][0-9]{0,9}');
 Route::pattern('tab', '\S{1,20}');
 Route::pattern('rand_str_id', '[0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ]{20}');
 Route::pattern('upgrade_name', '[a-zA-Z0-9_]{1,50}');
+Route::pattern('problem_list_id', '[1-9][0-9]{0,9}');
 
 Route::group([
 		'domain' => '('.UOJConfig::$data['web']['main']['host'].'|127.0.0.1'.')'
@@ -19,12 +20,11 @@ Route::group([
 		Route::any('/problem/{id}/statistics', '/problem_statistics.php');
 		Route::any('/problem/{id}/manage/statement', '/problem_statement_manage.php');
 		Route::any('/problem/{id}/manage/managers', '/problem_managers_manage.php');
-		Route::any('/problem/{id}/manage/data', '/problem_data_manage.php');
-		
+		Route::any('/problem/{id}/manage/data', '/problem_data_manage.php');	
 		Route::any('/problems/problem_lists', '/problem_lists.php'); //题单列表
 		Route::any('/problems/problem_lists/{id}', '/problem_list.php'); //展示具体题单
 		Route::any('/problems/problem_lists/{id}/edit', '/problem_list_edit.php'); //编辑题单
-		
+		Route::any('/problems/problem_lists/{problem_list_id}/export', '/problem_list_export.php');
 		
 		
 		Route::any('/contests', '/contests.php');
@@ -52,6 +52,12 @@ Route::group([
 			Route::any('/blog/{id}', '/blog_show.php');
 		}
 		Route::any('/blogs/{id}', '/blog_show.php');
+		Route::any('/post/{id}', '/blog_show.php');
+		
+		Route::any('/blogs/solutions', '/blogs.php?tab=solutions');
+		Route::any('/blogs/experiences', '/blogs.php?tab=experiences');
+
+
 		Route::any('/post/{id}', '/blog_show.php');
 		
 		Route::any('/announcements', '/announcements.php');
@@ -88,3 +94,27 @@ Route::post('/judge/download/submission/{id}/{rand_str_id}', '/judge/download.ph
 Route::post('/judge/download/tmp/{rand_str_id}', '/judge/download.php?type=tmp');
 Route::post('/judge/download/problem/{id}', '/judge/download.php?type=problem');
 Route::post('/judge/download/judger', '/judge/download.php?type=judger');
+
+// 在现有路由配置末尾添加这个路由
+// 这是直接访问博客写作页面的路由
+
+Route::any('/blog/{blog_username}/post/new/write', function() {
+    // 设置博客用户名全局变量，给 UOJContext::setupBlog() 使用
+    $_GET['blog_username'] = Route::var('blog_username');
+    
+    // 记录路由调试信息
+    error_log("博客写作路由：" . $_SERVER['REQUEST_URI']);
+    error_log("博客用户名: " . $_GET['blog_username']);
+    
+    // 强制设置博客环境
+    UOJContext::setupBlog();
+    
+    // 包含控制器文件
+    require $_SERVER['DOCUMENT_ROOT'] . '/app/controllers/subdomain/blog/blog_write.php';
+});
+
+// 添加题单导出路由
+Route::any('/problems/problem_lists/{id}/export', '/problems/problem_lists_export.php');
+
+// 添加题单CSV下载路由
+Route::any('/problem_list_download.php', '/problem_list_download.php');

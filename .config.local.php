@@ -29,10 +29,10 @@ return [
 	],
 	'security' => [
 		'user' => [
-			'client_salt' => 'Qohidh9aUO7IW0xLjdJFeQes3f58f1fj'
+			'client_salt' => 'tHEzEjtHChwHvW3qRNmKNJDoSN1tRZOf'
 		],
 		'cookie' => [
-			'checksum_salt' => ['O0TRSxiRkfevRcER', 'nrrjeG95ffnfIZ4z', 'TIcSkjssLlkJT19v']
+			'checksum_salt' => ['BaW3SWmCdbE6ibHx', 'gI3tYpf5XKMSLRrq', 'bTywKzlU8HolfhNR']
 		],
 	],
 	'mail' => [

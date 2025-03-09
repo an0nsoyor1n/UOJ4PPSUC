@@ -1,196 +1,186 @@
 <?php
 	requirePHPLib('form');
 	
-	if (!isset($_GET['id']) || !validateUInt($_GET['id']) || !($blog = queryBlog($_GET['id'])) || !UOJContext::isHis($blog)) {
+	// 记录所有请求参数
+	error_log("=== Blog Request Debug ===");
+	error_log("REQUEST_URI: " . $_SERVER['REQUEST_URI']);
+	error_log("REQUEST_METHOD: " . $_SERVER['REQUEST_METHOD']);
+	error_log("GET params: " . print_r($_GET, true));
+	error_log("POST params: " . print_r($_POST, true));
+	error_log("COOKIE params: " . print_r($_COOKIE, true));
+	error_log("=========================");
+	
+	// 检查博客ID
+	if (!isset($_GET['id']) || !validateUInt($_GET['id']) || !($blog = queryBlog($_GET['id']))) {
 		become404Page();
 	}
-	if ($blog['is_hidden'] && !UOJContext::hasBlogPermission()) {
-		become403Page();
+	
+	// 检查博客用户名
+	if (isset($_GET['blog_username'])) {
+		if ($blog['poster'] !== $_GET['blog_username']) {
+			become404Page();
+		}
 	}
 	
-	$comment_form = new UOJForm('comment');
-	$comment_form->addVTextArea('comment', '内容', '',
-		function($comment) {
-			global $myUser;
-			if ($myUser == null) {
-				return '请先登录';
-			}
-			if (!$comment) {
-				return '评论不能为空';
-			}
-			if (strlen($comment) > 1000) {
-				return '不能超过1000个字节';
-			}
-			return '';
-		},
-		null
-	);
-	$comment_form->handle = function() {
-		global $myUser, $blog, $comment_form;
-		$comment = HTML::escape($_POST['comment']);
-		
-		list($comment, $referrers) = uojHandleAtSign($comment, "/post/{$blog['id']}");
-		
-		$esc_comment = DB::escape($comment);
-		DB::insert("insert into blogs_comments (poster, blog_id, content, reply_id, post_time, zan) values ('{$myUser['username']}', '{$blog['id']}', '$esc_comment', 0, now(), 0)");
-		$comment_id = DB::insert_id();
-		
-		$rank = DB::selectCount("select count(*) from blogs_comments where blog_id = {$blog['id']} and reply_id = 0 and id < {$comment_id}");
-		$page = floor($rank / 20) + 1;
-		
-		$uri = getLongTablePageUri($page) . '#' . "comment-{$comment_id}";
-		
-		foreach ($referrers as $referrer) {
-			$content = '有人在博客 ' . $blog['title'] . ' 的评论里提到你：<a href="' . $uri . '">点击此处查看</a>';
-			sendSystemMsg($referrer, '有人提到你', $content);
-		}
-		
-		if ($blog['poster'] !== $myUser['username']) {
-			$content = '有人回复了您的博客 ' . $blog['title'] . ' ：<a href="' . $uri . '">点击此处查看</a>';
-			sendSystemMsg($blog['poster'], '博客新回复通知', $content);
-		}
-		
-		$comment_form->succ_href = getLongTablePageRawUri($page);
-	};
-	$comment_form->ctrl_enter_submit = true;
+	// 获取博客标签
+	$blog_tags = queryBlogTags($blog['id']);
 	
-	$comment_form->runAtServer();
-	
-	$reply_form = new UOJForm('reply');
-	$reply_form->addHidden('reply_id', '0',
-		function($reply_id, &$vdata) {
-			global $blog;
-			if (!validateUInt($reply_id) || $reply_id == 0) {
-				return '您要回复的对象不存在';
-			}
-			$comment = queryBlogComment($reply_id);
-			if (!$comment || $comment['blog_id'] != $blog['id']) {
-				return '您要回复的对象不存在';
-			}
-			$vdata['parent'] = $comment;
-			return '';
-		},
-		null
-	);
-	$reply_form->addVTextArea('reply_comment', '内容', '',
-		function($comment) {
-			global $myUser;
-			if ($myUser == null) {
-				return '请先登录';
-			}
-			if (!$comment) {
-				return '评论不能为空';
-			}
-			if (strlen($comment) > 140) {
-				return '不能超过140个字节';
-			}
-			return '';
-		},
-		null
-	);
-	$reply_form->handle = function(&$vdata) {
-		global $myUser, $blog, $reply_form;
-		$comment = HTML::escape($_POST['reply_comment']);
-		
-		list($comment, $referrers) = uojHandleAtSign($comment, "/post/{$blog['id']}");
-		
-		$reply_id = $_POST['reply_id'];
-		
-		$esc_comment = DB::escape($comment);
-		DB::insert("insert into blogs_comments (poster, blog_id, content, reply_id, post_time, zan) values ('{$myUser['username']}', '{$blog['id']}', '$esc_comment', $reply_id, now(), 0)");
-		$comment_id = DB::insert_id();
-		
-		$rank = DB::selectCount("select count(*) from blogs_comments where blog_id = {$blog['id']} and reply_id = 0 and id < {$reply_id}");
-		$page = floor($rank / 20) + 1;
-		
-		$uri = getLongTablePageUri($page) . '#' . "comment-{$reply_id}";
-		
-		foreach ($referrers as $referrer) {
-			$content = '有人在博客 ' . $blog['title'] . ' 的评论里提到你：<a href="' . $uri . '">点击此处查看</a>';
-			sendSystemMsg($referrer, '有人提到你', $content);
+	// 获取关联的题目（如果是题解）
+	$problem = null;
+	if ($blog['type'] === 'S') {
+		// 查找题解关联的题目
+		$result = DB::select("SELECT problem_id FROM blogs_solutions WHERE blog_id = {$blog['id']}");
+		if ($result) {
+			$problem_id = $result[0]['problem_id'];
+			$problem = queryProblemBrief($problem_id);
 		}
-		
-		$parent = $vdata['parent'];
-		$notified = array();
-		if ($parent['poster'] !== $myUser['username']) {
-			$notified[] = $parent['poster'];
-			$content = '有人回复了您在博客 ' . $blog['title'] . ' 下的评论 ：<a href="' . $uri . '">点击此处查看</a>';
-			sendSystemMsg($parent['poster'], '评论新回复通知', $content);
-		}
-		if ($blog['poster'] !== $myUser['username'] && !in_array($blog['poster'], $notified)) {
-			$notified[] = $blog['poster'];
-			$content = '有人回复了您的博客 ' . $blog['title'] . ' ：<a href="' . $uri . '">点击此处查看</a>';
-			sendSystemMsg($blog['poster'], '博客新回复通知', $content);
-		}
-		
-		$reply_form->succ_href = getLongTablePageRawUri($page);
-	};
-	$reply_form->ctrl_enter_submit = true;
+	}
 	
-	$reply_form->runAtServer();
-	
-	$comments_pag = new Paginator(array(
-		'col_names' => array('*'),
+	// 获取评论
+	$comments_pag = new Paginator([
+		'col_names' => ['*'],
 		'table_name' => 'blogs_comments',
-		'cond' => 'blog_id = ' . $blog['id'] . ' and reply_id = 0',
-		'tail' => 'order by id asc',
-		'page_len' => 20
-	));
-?>
-<?php
+		'cond' => "blog_id = {$blog['id']}",
+		'order' => 'post_time ASC',
+		'page_len' => 10
+	]);
+	
+	// 处理点赞功能
+	$is_liked = false;
+	if (Auth::check()) {
+		// 检查用户是否已点赞
+		$result = DB::select("SELECT * FROM blogs_likes WHERE blog_id = {$blog['id']} AND username = '".Auth::id()."'");
+		$is_liked = (count($result) > 0);
+	}
+	
+	$like_count = DB::selectCount("SELECT COUNT(*) FROM blogs_likes WHERE blog_id = {$blog['id']}");
+	
+	// 浏览量增加
+	if (Auth::check() && $blog['poster'] !== Auth::id()) {
+		DB::update("UPDATE blogs SET view_count = view_count + 1 WHERE id = {$blog['id']}");
+	}
+	
+	// 渲染页面
 	$REQUIRE_LIB['mathjax'] = '';
-	$REQUIRE_LIB['hljs'] = '';
+	$REQUIRE_LIB['shjs'] = '';
+	
+	// 设置页面标题
+	$page_title = $blog['title'];
+	requireLib('blog');
+	
+	// 显示博客内容
+	$content_md = $blog['content_md'];
+	$content_html = $blog['content'];
 ?>
-<?php echoUOJPageHeader(HTML::stripTags($blog['title']) . ' - 博客') ?>
-<?php echoBlog($blog, array('show_title_only' => isset($_GET['page']) && $_GET['page'] != 1)) ?>
-<h2>评论 <span class="glyphicon glyphicon-comment"></span></h2>
-<div class="list-group">
-<?php if ($comments_pag->isEmpty()): ?>
-	<div class="list-group-item text-muted">暂无评论</div>
-<?php else: ?>
-	<?php foreach ($comments_pag->get() as $comment):
-		$poster = queryUser($comment['poster']);
-		$esc_email = HTML::escape($poster['email']);
-		$asrc = HTML::avatar_addr($poster, 80);
-		
-		$replies = DB::selectAll("select id, poster, content, post_time from blogs_comments where reply_id = {$comment['id']} order by id");
-		foreach ($replies as $idx => $reply) {
-			$replies[$idx]['poster_rating'] = queryUser($reply['poster'])['rating'];
-		}
-		$replies_json = json_encode($replies);
-	?>
-	<div id="comment-<?= $comment['id'] ?>" class="list-group-item">
-		<div class="media">
-			<div class="media-left comtposterbox mr-3">
-				<a href="<?= HTML::url('/user/profile/'.$poster['username']) ?>" class="d-none d-sm-block">
-					<img class="media-object img-rounded" src="<?= $asrc ?>" alt="avatar" />
-				</a>
+<?php echoUOJPageHeader($blog['title']) ?>
+
+<div class="card">
+	<div class="card-header">
+		<div class="d-flex justify-content-between align-items-center">
+			<h1 class="card-title mb-0"><?= $blog['title'] ?></h1>
+			<?php if (UOJContext::hasBlogPermission() && UOJContext::isHis($blog)): ?>
+			<div class="btn-group">
+				<a href="<?= HTML::blog_url(UOJContext::userid(), "/post/{$blog['id']}/write") ?>" class="btn btn-outline-secondary">编辑</a>
+				<a href="<?= HTML::blog_url(UOJContext::userid(), "/post/{$blog['id']}/delete") ?>" class="btn btn-outline-danger">删除</a>
 			</div>
-			<div id="comment-body-<?= $comment['id'] ?>" class="media-body comtbox">
-				<div class="row">
-					<div class="col-sm-6"><?= getUserLink($poster['username']) ?></div>
-					<div class="col-sm-6 text-right"><?= getClickZanBlock('BC', $comment['id'], $comment['zan']) ?></div>
-				</div>
-				<div class="comtbox1"><?= $comment['content'] ?></div>
-				<ul class="text-right list-inline bot-buffer-no"><li><small class="text-muted"><?= $comment['post_time'] ?></small></li><li><a id="reply-to-<?= $comment['id'] ?>" href="#">回复</a></li></ul>
-				<?php if ($replies): ?>
-				<div id="replies-<?= $comment['id'] ?>" class="comtbox5"></div>
-				<?php endif ?>
-				<script type="text/javascript">showCommentReplies('<?= $comment['id'] ?>', <?= $replies_json ?>);</script>
-			</div>
+			<?php endif ?>
+		</div>
+		<div class="card-subtitle text-muted mt-2">
+			<span class="me-3">作者：<a href="<?= HTML::url('/user/profile/'.$blog['poster']) ?>"><?= $blog['poster'] ?></a></span>
+			<span class="me-3">发表于：<?= $blog['post_time'] ?></span>
+			<span class="me-3">浏览：<?= $blog['view_count'] ?></span>
+			<span id="like-count"><?= $like_count ?> 人赞</span>
 		</div>
 	</div>
-	<?php endforeach ?>
-<?php endif ?>
+	<div class="card-body">
+		<?php if ($blog['type'] === 'S' && $problem): ?>
+		<div class="alert alert-info">
+			这是 <a href="<?= HTML::url('/problem/'.$problem['id']) ?>"><?= $problem['title'] ?></a> 的题解
+		</div>
+		<?php endif ?>
+		
+		<?php if (!empty($blog_tags)): ?>
+		<div class="mb-3">
+			<?php foreach ($blog_tags as $tag): ?>
+			<span class="badge bg-primary me-1"><?= $tag ?></span>
+			<?php endforeach ?>
+		</div>
+		<?php endif ?>
+		
+		<div class="blog-content">
+			<?= $blog['content'] ?>
+		</div>
+		
+		<div class="mt-4 text-center">
+			<button class="btn <?= $is_liked ? 'btn-primary' : 'btn-outline-primary' ?>" 
+					id="blog-like-button" 
+					data-blog-id="<?= $blog['id'] ?>">
+				<i class="fas fa-thumbs-up"></i> <?= $is_liked ? '已赞' : '点赞' ?>
+			</button>
+		</div>
+	</div>
 </div>
-<?= $comments_pag->pagination() ?>
 
-<h3 class="mt-4">发表评论</h3>
-<p>可以用@mike来提到mike这个用户，mike会被高亮显示。如果你真的想打“@”这个字符，请用“@@”。</p>
-<?php $comment_form->printHTML() ?>
-
-<div id="div-form-reply" style="display:none">
-	<?php $reply_form->printHTML() ?>
+<!-- 评论区 -->
+<div class="card mt-4">
+	<div class="card-header">
+		<h3 class="card-title">评论</h3>
+	</div>
+	<div class="card-body">
+		<?php if (Auth::check()): ?>
+		<div class="mb-4">
+			<a href="/post/<?= $blog['id'] ?>/comment" class="btn btn-primary">发表评论</a>
+		</div>
+		<?php endif ?>
+		
+		<?php if ($comments_pag->isEmpty()): ?>
+		<div class="text-center text-muted">暂无评论</div>
+		<?php else: ?>
+		<?php foreach ($comments_pag->get() as $comment): ?>
+		<div class="comment mb-3 pb-3 border-bottom">
+			<div class="d-flex justify-content-between">
+				<div>
+					<a href="<?= HTML::url('/user/profile/'.$comment['poster']) ?>"><?= $comment['poster'] ?></a>
+				</div>
+				<div class="text-muted">
+					<?= $comment['post_time'] ?>
+				</div>
+			</div>
+			<div class="mt-2">
+				<?= $comment['content'] ?>
+			</div>
+		</div>
+		<?php endforeach ?>
+		
+		<?php $comments_pag->echoPageSelector() ?>
+		<?php endif ?>
+	</div>
 </div>
+
+<script>
+$(function() {
+	$('#blog-like-button').click(function() {
+		var blogId = $(this).data('blog-id');
+		$.post('<?= HTML::blog_url(UOJContext::userid(), "/click-zan") ?>', {
+			blog_id: blogId,
+			_token: '<?= crsf_token() ?>'
+		}, function(response) {
+			if (response.status === 'success') {
+				var likeButton = $('#blog-like-button');
+				if (response.liked) {
+					likeButton.removeClass('btn-outline-primary').addClass('btn-primary');
+					likeButton.html('<i class="fas fa-thumbs-up"></i> 已赞');
+				} else {
+					likeButton.removeClass('btn-primary').addClass('btn-outline-primary');
+					likeButton.html('<i class="fas fa-thumbs-up"></i> 点赞');
+				}
+				$('#like-count').text(response.like_count + ' 人赞');
+			} else {
+				alert('操作失败：' + response.message);
+			}
+		}, 'json');
+	});
+});
+</script>
 
 <?php echoUOJPageFooter() ?>

@@ -91,8 +91,15 @@ function queryZanVal($id, $type, $user) {
 	return $row['val'];
 }
 
+function queryBlogsByType($type = null) {
+	if ($type === null) {
+		return DB::selectAll("select * from blogs order by post_time desc");
+	}
+	return DB::selectAll("select * from blogs where type = '$type' order by post_time desc");
+}
+
 function queryBlog($id) {
-	return DB::selectFirst("select * from blogs where id='$id'", MYSQLI_ASSOC);
+	return DB::selectFirst("select blogs.*, user_info.username as poster_username from blogs left join user_info on blogs.poster = user_info.username where blogs.id = {$id}");
 }
 function queryBlogTags($id) {
 	$tags = array();

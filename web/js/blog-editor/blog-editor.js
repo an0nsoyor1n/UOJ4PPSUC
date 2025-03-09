@@ -1,6 +1,8 @@
 function blog_editor_init(name, editor_config) {
 	if (editor_config === undefined) {
-		editor_config = {};
+		editor_config = {
+			type: 'blog'
+		};
 	}
 	
 	editor_config = $.extend({
